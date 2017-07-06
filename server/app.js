@@ -24,3 +24,12 @@ app.get('/callback', function(req, res) {
   console.log(res);
   return githubOAuth.callback(req, res);
 });
+
+githubOAuth.on('error', function(err) {
+  console.error('There was login error!', err);
+});
+
+githubOAuth.on('token', function(token, serverResponse) {
+  console.log('TOKEN: ' + token);
+  serverResponse.end(JSON.stringify(token));
+})
