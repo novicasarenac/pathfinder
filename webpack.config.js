@@ -1,6 +1,5 @@
-var path = require('path');
-var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 function join(destination) {
   return path.resolve(__dirname, destination);
@@ -24,6 +23,11 @@ module.exports = {
         test: /\.jsx?$/,
         exclude: /node_modules/,
         loaders: ['react-hot-loader', 'babel-loader']
+      },
+      {
+        test: /\.css$/,
+        exclude: /node_modules/,
+        loaders: ['style-loader', 'css-loader']
       }
     ]
   },
@@ -34,4 +38,4 @@ module.exports = {
       inject: 'body'
     })
   ]
-}
+};
