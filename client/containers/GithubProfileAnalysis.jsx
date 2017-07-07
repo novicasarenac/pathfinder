@@ -1,4 +1,28 @@
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import GithubProfileForm from '../components/GithubProfileForm';
+import actions from '../actions';
 
-export default connect()(GithubProfileForm);
+class GithubProfileAnalysis extends Component {
+  handleSubmit(username) {
+    this.props.startAnalysis(username);
+  }
+
+  render() {
+    return (
+      <GithubProfileForm
+        onSubmit={values => this.handleSubmit(values.username)}
+        handleBack={this.props.handleBack}
+      />
+    );
+  }
+}
+
+const mapDispatchToProps = dispatch => ({
+  startAnalysis: username =>
+    dispatch(actions.startGithubProfileAnalysis(username)),
+
+  handleBack: () => dispatch(actions.redirect('/'))
+});
+
+export default connect(null, mapDispatchToProps)(GithubProfileAnalysis);
