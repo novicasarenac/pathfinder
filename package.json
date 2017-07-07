@@ -22,8 +22,11 @@
   "dependencies": {
     "axios": "^0.16.2",
     "babel-plugin-react-css-modules": "^3.0.0",
+    "body-parser": "^1.17.2",
     "bootstrap": "^4.0.0-alpha.6",
     "concurrently": "^3.5.0",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.15.3",
     "font-awesome": "^4.7.0",
     "history": "^4.6.3",
     "prop-types": "^15.5.10",
@@ -37,10 +40,7 @@
     "react-router-redux": "^5.0.0-alpha.6",
     "redux": "^3.7.1",
     "redux-form": "^6.8.0",
-    "redux-thunk": "^2.2.0",
-    "body-parser": "^1.17.2",
-    "cookie-parser": "^1.4.3",
-    "express": "^4.15.3"
+    "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
