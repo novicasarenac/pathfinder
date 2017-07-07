@@ -4,6 +4,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import createHistory from 'history/createBrowserHistory';
+import { ConnectedRouter } from 'react-router-redux';
 import configureStore from './store';
 import App from './containers/App';
 
@@ -12,7 +13,9 @@ const store = configureStore(history);
 
 render(
   <Provider store={store}>
-    <App history={history} />
+    <ConnectedRouter history={history}>
+      <App />
+    </ConnectedRouter>
   </Provider>,
   document.getElementById('app')
 );

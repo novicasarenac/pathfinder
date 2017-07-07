@@ -1,21 +1,32 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { ConnectedRouter } from 'react-router-redux';
-import PropTypes from 'prop-types';
+import GitHubForkRibbon from 'react-github-fork-ribbon';
+import { Col } from 'react-bootstrap';
+import Footer from '../components/Footer';
 import routes from '../routes';
+import { homepage } from '../../package.json';
 
 class App extends Component {
   render() {
     return (
-      <ConnectedRouter history={this.props.history}>
-        {routes}
-      </ConnectedRouter>
+      <Col className="container-fluid h-100">
+        <GitHubForkRibbon
+          href={homepage}
+          target="tab"
+          position="right"
+          color="green"
+        >
+          Fork me on GitHub
+        </GitHubForkRibbon>
+
+        <Col className="h-100 d-flex align-items-center justify-content-center">
+          {routes}
+        </Col>
+
+        <Footer />
+      </Col>
     );
   }
 }
-
-App.propTypes = {
-  history: PropTypes.object.isRequired // eslint-disable-line react/forbid-prop-types
-};
 
 export default connect(null, null)(App);
