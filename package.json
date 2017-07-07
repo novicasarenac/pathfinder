@@ -4,7 +4,9 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "dev": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --hot --inline --history-api-fallback"
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "node server/app.js",
+    "client": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --hot --inline --history-api-fallback"
   },
   "repository": {
     "type": "git",
@@ -20,6 +22,7 @@
     "axios": "^0.16.2",
     "babel-plugin-react-css-modules": "^3.0.0",
     "bootstrap": "^4.0.0-alpha.6",
+    "concurrently": "^3.5.0",
     "font-awesome": "^4.7.0",
     "history": "^4.6.3",
     "prop-types": "^15.5.10",
