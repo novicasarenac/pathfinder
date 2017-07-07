@@ -9,14 +9,23 @@ class MainPage extends Component {
         <hr className="mb-5" />
 
         <Jumbotron className="d-flex align-items-center justify-content-center">
-          <Button bsStyle="success" bsSize="large" className="btn-social">
+          <Button
+            bsStyle="success"
+            bsSize="large"
+            className="btn-social"
+            onClick={this.props.handleFindPathClick}
+          >
             <i className="fa fa-search" />
             Find Your Path
           </Button>
 
           <b className="mr-3 ml-3">or</b>
 
-          <Button className="btn-social btn-github" bsSize="large">
+          <Button
+            className="btn-social btn-github"
+            bsSize="large"
+            onClick={this.props.handleGithubProfileClick}
+          >
             <i className="fa fa-github" />
             Sign In With Github
           </Button>

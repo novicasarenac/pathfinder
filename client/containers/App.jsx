@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import GitHubForkRibbon from 'react-github-fork-ribbon';
 import { Col } from 'react-bootstrap';
+import { withRouter } from 'react-router-dom';
 import Footer from '../components/Footer';
 import routes from '../routes';
 import { homepage } from '../../package.json';
@@ -30,4 +31,4 @@ class App extends Component {
   }
 }
 
-export default connect(null, null)(App);
+export default withRouter(connect()(App));
