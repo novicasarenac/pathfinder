@@ -1,4 +1,4 @@
 exports.login = function(req, res) {
-  console.log('OAuth started!');
-  return githubOAuth.login(req, res);
+  var user = req.body;
+  res.sendStatus(200);
 };
