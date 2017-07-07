@@ -29,3 +29,8 @@ body {
 h1 {
   text-shadow: -1px 0 gray, 0 1px gray, 1px 0 gray, 0 -1px gray;
 }
+
+.jumbotron {
+  border-radius: 15px;
+  border: 1px solid gray;
+}
