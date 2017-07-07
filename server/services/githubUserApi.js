@@ -2,10 +2,11 @@ import GitHubApi from 'github';
 
 const github = GitHubApi();
 
-function getUser(name) {
+function handleUser(name) {
   github.users.getForUser({ username: name }, (err, res) => {
-    console.log(res.data);
+    const user = res.data;
+    console.log(user);
   });
 }
 
-export default { getUser };
+export default { handleUser };
