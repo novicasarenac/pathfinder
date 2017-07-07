@@ -27,5 +27,11 @@ body {
 }
 
 h1 {
-  text-shadow: -1px 0 gray, 0 1px gray, 1px 0 gray, 0 -1px gray;
+  text-shadow: -1px 0 #7c868d, 0 1px #7c868d, 1px 0 #7c868d, 0 -1px #7c868d;
+}
+
+.jumbotron {
+  border-radius: 15px;
+  border: 1px solid gray;
+  box-shadow: 0 8px 100px -6px black;
 }
