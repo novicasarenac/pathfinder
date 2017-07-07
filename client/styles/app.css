@@ -18,12 +18,16 @@
 .btn-social-icon.btn-sm{height:30px;width:30px;padding-left:0;padding-right:0}
 .btn-social-icon.btn-xs{height:22px;width:22px;padding-left:0;padding-right:0}
 
-#app {
-  height: 80vh;
+body, #app {
+  height: 100vh;
 }
 
 body {
-  background-image: url('../public/background.jpg');
+  background: url('../public/background.jpg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
 h1 {
