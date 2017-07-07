@@ -23,7 +23,11 @@
 }
 
 body {
-  background-image: url('../public/background.jpg');
+  background: url('../public/background.jpg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
 h1 {
