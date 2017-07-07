@@ -1,4 +1,6 @@
 import { push } from 'react-router-redux';
+import { SubmissionError } from 'redux-form';
+import api from '../api';
 
 export default {
   redirect(url) {
@@ -6,6 +8,11 @@ export default {
   },
 
   startGithubProfileAnalysis(username) {
-    return dispatch => username;
+    return dispatch =>
+      api.userExists(username).catch((error) => {
+        throw new SubmissionError({
+          username: `User ${username} does not exists!`
+        });
+      });
   }
 };

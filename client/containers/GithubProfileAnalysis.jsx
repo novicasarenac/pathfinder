@@ -5,7 +5,7 @@ import actions from '../actions';
 
 class GithubProfileAnalysis extends Component {
   handleSubmit(username) {
-    this.props.startAnalysis(username);
+    return this.props.startAnalysis(username);
   }
 
   render() {

@@ -1,3 +1,5 @@
+/* eslint no-nested-ternary: "off" */
+
 import React, { Component } from 'react';
 import {
   Col,
@@ -10,22 +12,29 @@ import {
 } from 'react-bootstrap';
 import { reduxForm, Field } from 'redux-form';
 
-const renderInput = field =>
-  (<FormGroup bsSize="small">
-    <InputGroup>
-      <InputGroup.Addon className="btn-github">
-        <i className="fa fa-github fa-2x" />
-      </InputGroup.Addon>
-      <FormControl
-        {...field.input}
-        placeholder={field.placeholder}
-        type={field.type}
-        autoComplete="off"
-        autoCorrect="off"
-        spellCheck="false"
-      />
-    </InputGroup>
-  </FormGroup>);
+const renderInput = ({ input, placeholder, type, meta: { touched, error } }) =>
+  (<div>
+    <FormGroup controlId="githubUsernameField" bsSize="small">
+      <InputGroup>
+        <InputGroup.Addon className="btn-github">
+          <i className="fa fa-github fa-2x" />
+        </InputGroup.Addon>
+        <FormControl
+          {...input}
+          placeholder={placeholder}
+          type={type}
+          autoComplete="off"
+          autoCorrect="off"
+          spellCheck="false"
+        />
+      </InputGroup>
+    </FormGroup>
+    {touched &&
+      error &&
+      <p className="text-center text-danger mt-3 mb-3 form-text text-muted">
+        {error}
+      </p>}
+  </div>);
 
 class GithubProfileForm extends Component {
   render() {
@@ -44,7 +53,7 @@ class GithubProfileForm extends Component {
           </p>
           <hr className="my-4" />
 
-          <Col lg={4} className="container">
+          <Col lg={6} className="container">
             <Form onSubmit={this.props.handleSubmit}>
               <Field
                 name="username"
