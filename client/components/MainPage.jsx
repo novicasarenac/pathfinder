@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Button, Col, Jumbotron } from 'react-bootstrap';
-import './main.css';
 
 class MainPage extends Component {
   render() {

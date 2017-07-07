@@ -5,6 +5,7 @@ import { Col } from 'react-bootstrap';
 import Footer from '../components/Footer';
 import routes from '../routes';
 import { homepage } from '../../package.json';
+import '../styles/app.css';
 
 class App extends Component {
   render() {
