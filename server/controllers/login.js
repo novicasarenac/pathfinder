@@ -1,4 +1,5 @@
-exports.login = function(req, res) {
-  var user = req.body;
+export default function loginExport(req, res) {
+  const user = req.body;
+  console.log(user);
   res.sendStatus(200);
-};
+}
