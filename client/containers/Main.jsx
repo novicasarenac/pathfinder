@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import MainPage from '../components/MainPage';
 
 class Main extends Component {
   render() {
-    return <h1>Hello World</h1>;
+    return <MainPage />;
   }
 }
 
