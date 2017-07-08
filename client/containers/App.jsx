@@ -2,13 +2,18 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import GitHubForkRibbon from 'react-github-fork-ribbon';
 import { Col } from 'react-bootstrap';
+import { withRouter } from 'react-router-dom';
+import Websocket from 'react-websocket';
 import Footer from '../components/Footer';
 import routes from '../routes';
 import { homepage } from '../../package.json';
+import actions from '../actions';
 import '../styles/app.css';
 
 class App extends Component {
   render() {
+    const webSocketServerUrl = process.env.API_URL.replace('http', 'ws');
+
     return (
       <Col className="container-fluid h-100">
         <GitHubForkRibbon
@@ -24,10 +29,18 @@ class App extends Component {
           {routes}
         </Col>
 
+        <Websocket
+          url={webSocketServerUrl}
+          onMessage={this.props.handleWsMessage}
+        />
         <Footer />
       </Col>
     );
   }
 }
 
-export default connect(null, null)(App);
+const mapDispatchToProps = dispatch => ({
+  handleWsMessage: message => dispatch(actions.onWsMessage(message))
+});
+
+export default withRouter(connect(null, mapDispatchToProps)(App));
