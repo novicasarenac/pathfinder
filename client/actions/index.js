@@ -10,9 +10,15 @@ export default {
   startGithubProfileAnalysis(username) {
     return dispatch =>
       api.userExists(username).catch((error) => {
-        throw new SubmissionError({
-          username: `User ${username} does not exists!`
-        });
+        if (error.response) {
+          throw new SubmissionError({
+            username: `User ${username} does not exists!`
+          });
+        } else {
+          throw new SubmissionError({
+            username: "Can't connect to Github right now. Try again later."
+          });
+        }
       });
   }
 };
