@@ -14,7 +14,14 @@ const reducer = (state = initialState, action) => {
     case 'RESPONSE_RECEIVED':
       return {
         isWaiting: false,
-        user: action.user
+        user: {
+          name: action.user.name,
+          username: action.user.login,
+          email: action.user.email,
+          avatar: action.user.avatar_url,
+          location: action.user.location,
+          company: action.user.company
+        }
       };
 
     default:

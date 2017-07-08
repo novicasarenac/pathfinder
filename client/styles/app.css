@@ -49,3 +49,9 @@ div.page, .jumbotron {
   border: 1px solid gray;
   box-shadow: 0 8px 100px -6px black;
 }
+
+img[alt="avatar"] {
+  width: 250px;
+  height: 250px;
+  border-radius: 10px;
+}
