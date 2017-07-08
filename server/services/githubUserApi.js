@@ -24,6 +24,16 @@ function getGithubUserFollowing(message) {
   });
 }
 
+function getGithubUserRepositories(message) {
+  github.repos.getForUser({ username: message.username, per_page: 5 }, function getRepos(err, res) {
+    const repos = res.data;
+    dataStorage.addGithubUserRepos(message.id, repos);
+    if (github.hasNextPage(res)) {
+      github.getNextPage(res, getRepos);
+    }
+  });
+}
+
 function handleUser(message) {
   console.log(message);
   github.users.getForUser({ username: message.username }, (err, res) => {
@@ -33,6 +43,7 @@ function handleUser(message) {
 
     getGithubUserFollowers(message);
     getGithubUserFollowing(message);
+    getGithubUserRepositories(message);
   });
 }
 
