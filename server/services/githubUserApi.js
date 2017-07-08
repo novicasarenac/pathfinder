@@ -12,4 +12,10 @@ function handleUser(message) {
   });
 }
 
+/*function getFollowersForUser(message) {
+  github.users.getFollowersForUser({ username: message.username }, (err, res) => {
+
+  })
+}*/
+
 export default { handleUser };
