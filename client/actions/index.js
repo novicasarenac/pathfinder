@@ -22,7 +22,11 @@ export default {
             });
           }
         })
-        .then(() => api.startAnalysis(username, getState().ws.id));
+        .then((response) => {
+          api.startAnalysis(username, getState().ws.id);
+
+          dispatch({ type: 'RESPONSE_RECEIVED', user: response.data });
+        });
   },
 
   onWsMessage(message) {
