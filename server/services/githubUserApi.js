@@ -14,6 +14,16 @@ function getGithubUserFollowers(message) {
   });
 }
 
+function getGithubUserFollowing(message) {
+  github.users.getFollowingForUser({ username: message.username, per_page: 5 }, function getFollowing(err, res) { //eslint-disable-line
+    const following = res.data;
+    dataStorage.addGithubUserFollowing(message.id, following);
+    if (github.hasNextPage(res)) {
+      github.getNextPage(res, getFollowing);
+    }
+  });
+}
+
 function handleUser(message) {
   console.log(message);
   github.users.getForUser({ username: message.username }, (err, res) => {
@@ -22,6 +32,7 @@ function handleUser(message) {
     notifications.sendUser(message.id, user);
 
     getGithubUserFollowers(message);
+    getGithubUserFollowing(message);
   });
 }
 

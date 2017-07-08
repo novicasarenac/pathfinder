@@ -11,4 +11,8 @@ function addGithubUserFollowers(id, newFollowers) {
   githubUserData[id].addFollowers(newFollowers);
 }
 
-export default { addGithubUser, addGithubUserFollowers };
+function addGithubUserFollowing(id, newFollowing) {
+  githubUserData[id].addFollowing(newFollowing);
+}
+
+export default { addGithubUser, addGithubUserFollowers, addGithubUserFollowing };
