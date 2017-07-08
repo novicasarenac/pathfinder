@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
 
 function join(destination) {
   return path.resolve(__dirname, destination);
@@ -59,6 +60,13 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: join('client/index.html'),
       inject: 'body'
+    }),
+
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+        API_URL: JSON.stringify(process.env.API_URL)
+      }
     })
   ]
 };
