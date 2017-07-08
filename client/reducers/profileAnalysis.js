@@ -1,6 +1,6 @@
 const initialState = {
   isWaiting: false,
-  user: {}
+  user: null
 };
 
 const reducer = (state = initialState, action) => {

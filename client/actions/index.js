@@ -26,6 +26,8 @@ export default {
           api.startAnalysis(username, getState().ws.id);
 
           dispatch({ type: 'RESPONSE_RECEIVED', user: response.data });
+
+          dispatch(push('/analysis'));
         });
   },
 

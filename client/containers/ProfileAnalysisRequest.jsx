@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import GithubProfileForm from '../components/GithubProfileForm';
 import actions from '../actions';
 
-class GithubProfileAnalysis extends Component {
+class ProfileAnalysisRequest extends Component {
   handleSubmit(username) {
     this.props.waitResponse();
 
@@ -34,5 +34,5 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(
-  GithubProfileAnalysis
+  ProfileAnalysisRequest
 );
