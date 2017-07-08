@@ -7,4 +7,8 @@ function addGithubUser(id) {
   console.log(id);
 }
 
-export default { addGithubUser };
+function addGithubUserFollowers(id, newFollowers) {
+  githubUserData[id].addFollowers(newFollowers);
+}
+
+export default { addGithubUser, addGithubUserFollowers };

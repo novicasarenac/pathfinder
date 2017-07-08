@@ -1,10 +1,10 @@
 class GithubUserData { // eslint-disable-line
   constructor() {
-    this.followers = {};
+    this.followers = [];
   }
 
   addFollowers(newFollowers) {
-    this.followers.push(newFollowers);
+    this.followers = this.followers.concat(newFollowers);
   }
 }
 
