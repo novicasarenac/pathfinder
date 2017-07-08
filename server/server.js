@@ -27,3 +27,5 @@ wss.on('connection', (ws, req) => { // eslint-disable-line
 
   ws.send(JSON.stringify({ type: 'CONNECTED', id: ultron.id }));
 });
+
+export default wss;
