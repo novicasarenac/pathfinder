@@ -35,13 +35,17 @@ h1 {
 }
 
 .jumbotron {
-  border-radius: 15px;
-  border: 1px solid gray;
-  box-shadow: 0 8px 100px -6px black;
   padding-bottom: 30px;
   padding-top: 30px;
 }
 
 .btn:enabled {
   cursor: pointer !important;
+}
+
+div.page, .jumbotron {
+  background-color: #f2f0ed;
+  border-radius: 15px;
+  border: 1px solid gray;
+  box-shadow: 0 8px 100px -6px black;
 }
