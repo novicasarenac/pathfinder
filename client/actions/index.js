@@ -8,7 +8,7 @@ export default {
   },
 
   startGithubProfileAnalysis(username) {
-    return dispatch =>
+    return (dispatch, getState) =>
       api
         .userExists(username)
         .catch((error) => {
@@ -22,10 +22,21 @@ export default {
             });
           }
         })
-        .then(() => api.startAnalysis(username));
+        .then(() => api.startAnalysis(username, getState().ws.id));
   },
 
   onWsMessage(message) {
-    return dispatch => console.log(message);
+    return (dispatch) => {
+      const { type, id } = JSON.parse(message);
+
+      switch (type) {
+        case 'CONNECTED':
+          dispatch({ type: 'SOCKET_CONNECTED', id });
+          break;
+
+        default:
+          console.log(message);
+      }
+    };
   }
 };

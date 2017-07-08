@@ -7,9 +7,9 @@ export default {
     return axios.get(githubUrl);
   },
 
-  startAnalysis(username) {
+  startAnalysis(username, socketId) {
     const url = `${process.env.API_URL}/user`;
 
-    axios.post(url, { username });
+    axios.post(url, { username, id: socketId });
   }
 };
