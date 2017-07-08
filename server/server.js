@@ -18,12 +18,12 @@ const server = app.listen(port, () => {
 
 const wss = new WebSocket.Server({ server });
 
-wss.on('connection', (ws, req) => {
-  console.log('connected');
+wss.on('connection', (ws, req) => { // eslint-disable-line
+  const ultron = ws['_ultron']; // eslint-disable-line
 
   ws.on('message', (message) => {
     console.log(message);
   });
 
-  ws.send('connected');
+  ws.send(JSON.stringify({ type: 'CONNECTED', id: ultron.id }));
 });
