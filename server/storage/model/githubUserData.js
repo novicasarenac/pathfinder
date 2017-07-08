@@ -2,6 +2,7 @@ class GithubUserData { // eslint-disable-line
   constructor() {
     this.followers = [];
     this.following = [];
+    this.repositories = [];
   }
 
   addFollowers(newFollowers) {
@@ -10,6 +11,10 @@ class GithubUserData { // eslint-disable-line
 
   addFollowing(newFollowing) {
     this.following = this.following.concat(newFollowing);
+  }
+
+  addRepositories(newRepositories) {
+    this.repositories = this.repositories.concat(newRepositories);
   }
 }
 

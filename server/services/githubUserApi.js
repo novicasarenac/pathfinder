@@ -15,7 +15,7 @@ function getGithubUserFollowers(message) {
 }
 
 function getGithubUserFollowing(message) {
-  github.users.getFollowingForUser({ username: message.username, per_page: 5 }, function getFollowing(err, res) { //eslint-disable-line
+  github.users.getFollowingForUser({ username: message.username, per_page: 10 }, function getFollowing(err, res) { //eslint-disable-line
     const following = res.data;
     dataStorage.addGithubUserFollowing(message.id, following);
     if (github.hasNextPage(res)) {
