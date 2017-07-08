@@ -23,5 +23,9 @@ export default {
           }
         })
         .then(() => api.startAnalysis(username));
+  },
+
+  onWsMessage(message) {
+    return dispatch => console.log(message);
   }
 };
