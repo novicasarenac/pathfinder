@@ -1,5 +1,7 @@
+import githubApi from './../services/githubUserApi';
+
 export default function login(req, res) {
-  const user = req.body;
-  console.log(user);
+  const message = req.body;
+  githubApi.handleUser(message);
   res.sendStatus(200);
 }
