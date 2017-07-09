@@ -23,7 +23,7 @@ export default {
           }
         })
         .then((response) => {
-          dispatch({ type: 'USER_RESPONSE_RECEIVED', user: response.user });
+          dispatch({ type: 'USER_RESPONSE_RECEIVED', user: response.data });
           dispatch(push('/analysis'));
         });
   }

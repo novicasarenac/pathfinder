@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import { PieChart, Pie, Cell, Legend } from 'recharts';
-import GithubLanguageColors from '../utils/githubLanguageColors';
+import utils from '../utils';
 
 const RADIAN = Math.PI / 180;
 
@@ -26,39 +26,40 @@ const renderCustomizedLabel = ({
       textAnchor={x > cx ? 'start' : 'end'}
       dominantBaseline="central"
     >
-      {`${(percent * 100).toFixed(0)} %`}
+      {percent < 0.02 ? '' : `${(percent * 100).toFixed(0)} %`}
     </text>
   );
 };
 
 class LanguageUsageChart extends Component {
   languageStats() {
-    return Object.entries(this.props.data).map((language, percentage) => ({
-      name: language,
-      value: percentage
+    return Object.keys(this.props.data).map(key => ({
+      name: key,
+      value: this.props.data[key]
     }));
   }
 
   render() {
-    const githubColors = new GithubLanguageColors();
-
     return (
-      <PieChart width={350} height={300} onMouseEnter={this.onPieEnter}>
+      <PieChart width={360} height={310} onMouseEnter={this.onPieEnter}>
         <Pie
           cx="50%"
           cy="50%"
           data={this.languageStats()}
           labelLine={false}
           label={renderCustomizedLabel}
-          outerRadius={90}
+          outerRadius={95}
           fill="#8884d8"
         >
-          {this.props.data.map(entry =>
-            <Cell fill={githubColors.getColorForLanguage(entry.name)} />
+          {this.languageStats().map(entry =>
+            (<Cell
+              id={entry.name}
+              fill={utils.getColorForLanguage(entry.name)}
+            />)
           )}
         </Pie>
 
-        <Legend />
+        <Legend iconType="circle" />
       </PieChart>
     );
   }
