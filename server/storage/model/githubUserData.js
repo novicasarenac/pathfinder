@@ -3,6 +3,7 @@ class GithubUserData { // eslint-disable-line
     this.followers = [];
     this.following = [];
     this.repositories = [];
+    this.similarityPercentages = [];
   }
 
   addFollowers(newFollowers) {
@@ -15,6 +16,10 @@ class GithubUserData { // eslint-disable-line
 
   addRepositories(newRepositories) {
     this.repositories = this.repositories.concat(newRepositories);
+  }
+
+  addSimilarityPercentage(username, percentage) {
+    this.similarityPercentages[username] = percentage;
   }
 
   getRepositories() {
