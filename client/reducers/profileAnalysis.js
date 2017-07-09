@@ -12,7 +12,7 @@ const reducer = (state = initialState, action) => {
         isWaiting: true
       };
 
-    case 'RESPONSE_RECEIVED':
+    case 'USER_RESPONSE_RECEIVED':
       return {
         ...state,
         isWaiting: false,

@@ -22,7 +22,8 @@ export default {
             });
           }
         })
-        .then(() => {
+        .then((response) => {
+          dispatch({ type: 'USER_RESPONSE_RECEIVED', user: response.user });
           dispatch(push('/analysis'));
         });
   }
