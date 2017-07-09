@@ -1,5 +1,4 @@
 import GitHubApi from 'github';
-import notifications from './notifications';
 import dataStorage from '../storage/dataStorage';
 import githubUserLanguagesAnalyze from '../engine/githubUserLanguagesAnalyze';
 
@@ -42,16 +41,20 @@ function getGithubUserRepositories(message) {
   });
 }
 
-function handleUser(message) {
+function handleUser(message, response) {
   console.log(message);
   github.users.getForUser({ username: message.username }, (err, res) => {
-    const user = res.data;
-    dataStorage.addGithubUser(message.id);
-    notifications.sendUser(message.id, user);
+    if (err !== null) {
+      response.sendStatus(404);
+    } else {
+      const user = res.data;
+      dataStorage.addGithubUser(message.id);
+      response.send(user);
 
-    getGithubUserFollowers(message);
-    getGithubUserFollowing(message);
-    getGithubUserRepositories(message);
+      getGithubUserFollowers(message);
+      getGithubUserFollowing(message);
+      getGithubUserRepositories(message);
+    }
   });
 }
 
