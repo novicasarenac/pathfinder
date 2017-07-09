@@ -11,18 +11,29 @@ github.authenticate({
 const languageAnalyzeResult = {};
 
 function computeAndNotify(id) {
-  const percentage = {};
+  const percentages = {};
+  const allPercentages = {};
   let sum = 0;
   Object.keys(languageAnalyzeResult[id].result).forEach((key) => {
     sum += languageAnalyzeResult[id].result[key];
   });
 
   Object.keys(languageAnalyzeResult[id].result).forEach((key) => {
-    percentage[key] = languageAnalyzeResult[id].result[key] * 100 / sum; //eslint-disable-line
+    allPercentages[key] = languageAnalyzeResult[id].result[key] * 100 / sum; //eslint-disable-line
   });
 
-  console.log(percentage);
-  notifications.sendLanguagesStatistics(id, percentage);
+  const sorted = Object.keys(allPercentages).sort((a, b) => allPercentages[b] - allPercentages[a]);
+
+  for(var i = 0; i < (sorted.length > 9 ? 9 : sorted.length); i++) { //eslint-disable-line
+    percentages[sorted[i]] = allPercentages[sorted[i]];
+  }
+  if (sorted.length > 9) {
+    const percentagesSum = Object.keys(percentages).reduce((acc, b) => acc + percentages[b], 0);
+    percentages['Other'] = 100 - percentagesSum;
+  }
+
+  console.log(percentages);
+  notifications.sendLanguagesStatistics(id, percentages);
 }
 
 function addToLanguageAnalyzeResult(id, numberOfRepositories, data) {

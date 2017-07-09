@@ -8,10 +8,10 @@ function sendUser(id, user) {
   });
 }
 
-function sendLanguagesStatistics(id, percentage) {
+function sendLanguagesStatistics(id, percentages) {
   wss.clients.forEach((client) => {
     if(client['_ultron'].id === id) {
-      client.send(JSON.stringify({ type: 'LANG-STATS', percentage }));
+      client.send(JSON.stringify({ type: 'LANG-STATS', percentages }));
     }
   });
 }
