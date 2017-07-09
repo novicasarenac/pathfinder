@@ -4,11 +4,11 @@ import { routerReducer } from 'react-router-redux';
 import profileAnalysis from './profileAnalysis';
 import ws from './ws';
 
-const reducers = combineReducers({
+const reducer = combineReducers({
   routing: routerReducer,
   form,
   ws,
   profileAnalysis
 });
 
-export default reducers;
+export default reducer;

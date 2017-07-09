@@ -1,3 +1,18 @@
+function mapUserState(user) {
+  if (!user) {
+    return null;
+  }
+
+  return {
+    name: user.name,
+    username: user.login,
+    email: user.email,
+    avatar: user.avatar_url,
+    location: user.location,
+    company: user.company
+  };
+}
+
 const initialState = {
   isWaiting: false,
   user: null,
@@ -16,14 +31,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         isWaiting: false,
-        user: {
-          name: action.user.name,
-          username: action.user.login,
-          email: action.user.email,
-          avatar: action.user.avatar_url,
-          location: action.user.location,
-          company: action.user.company
-        }
+        user: mapUserState(action.user)
       };
 
     case 'LANGUAGE_USAGE_STATS':
@@ -31,6 +39,9 @@ const reducer = (state = initialState, action) => {
         ...state,
         languageUsageStats: action.percentages
       };
+
+    case 'RESET':
+      return initialState;
 
     default:
       return state;

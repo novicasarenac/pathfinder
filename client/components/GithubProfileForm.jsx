@@ -1,7 +1,7 @@
 /* eslint no-nested-ternary: "off" */
 
 import React, { Component } from 'react';
-import { PropagateLoader } from 'react-spinners';
+import { BounceLoader } from 'react-spinners';
 import {
   Col,
   Jumbotron,
@@ -40,15 +40,10 @@ const renderInput = ({ input, placeholder, type, meta: { touched, error } }) =>
 class GithubProfileForm extends Component {
   renderSpinner() {
     return (
-      <Jumbotron>
-        <p className="display-4 text-center text-success">
-          <b>Analyzing</b>
-        </p>
-        <hr />
-        <div className="d-flex justify-content-center">
-          <PropagateLoader color="green" loading={this.props.isWaiting} />
-        </div>
-      </Jumbotron>
+      <div className="mt-5 mb-5 d-flex justify-content-center">
+        <span className="mt-3">&nbsp;</span>
+        <BounceLoader size={80} color="green" />
+      </div>
     );
   }
 
@@ -77,14 +72,16 @@ class GithubProfileForm extends Component {
             />
 
             <div className="text-center">
-              <Button
-                className="mt-3"
-                type="submit"
-                bsStyle="success"
-                disabled={this.props.pristine}
-              >
-                Analyse Profile
-              </Button>
+              {this.props.isWaiting
+                ? this.renderSpinner()
+                : <Button
+                  className="mt-3"
+                  type="submit"
+                  bsStyle="success"
+                  disabled={this.props.pristine}
+                >
+                    Analyse Profile
+                </Button>}
             </div>
           </Form>
         </Col>
@@ -95,7 +92,7 @@ class GithubProfileForm extends Component {
   render() {
     return (
       <Col md={6} mdOffset={3} sm={12} className="h-75">
-        {this.props.isWaiting ? this.renderSpinner() : this.renderForm()}
+        {this.renderForm()}
       </Col>
     );
   }

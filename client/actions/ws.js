@@ -12,7 +12,7 @@ export function onWsMessage(message) {
         break;
       }
 
-      case 'LANG_STATS': {
+      case 'LANG-STATS': {
         const { percentages } = jsonMessage;
 
         dispatch({ type: 'LANGUAGE_USAGE_STATS', percentages });
