@@ -19,4 +19,8 @@ function addGithubUserRepos(id, newRepositories) {
   githubUserData[id].addRepositories(newRepositories);
 }
 
-export default { addGithubUser, addGithubUserFollowers, addGithubUserFollowing, addGithubUserRepos };
+function getGithubUserRepositories(id) {
+  return githubUserData[id].getRepositories();
+}
+
+export default { addGithubUser, addGithubUserFollowers, addGithubUserFollowing, addGithubUserRepos, getGithubUserRepositories };

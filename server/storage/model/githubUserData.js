@@ -16,6 +16,10 @@ class GithubUserData { // eslint-disable-line
   addRepositories(newRepositories) {
     this.repositories = this.repositories.concat(newRepositories);
   }
+
+  getRepositories() {
+    return this.repositories;
+  }
 }
 
 export default GithubUserData;

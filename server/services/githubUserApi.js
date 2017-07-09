@@ -1,6 +1,7 @@
 import GitHubApi from 'github';
 import notifications from './notifications';
 import dataStorage from '../storage/dataStorage';
+import githubUserLanguagesAnalyze from '../engine/githubUserLanguagesAnalyze';
 
 const github = GitHubApi();
 
@@ -30,6 +31,8 @@ function getGithubUserRepositories(message) {
     dataStorage.addGithubUserRepos(message.id, repos);
     if (github.hasNextPage(res)) {
       github.getNextPage(res, getRepos);
+    } else {
+      githubUserLanguagesAnalyze.analyzeLanguages(message.id);
     }
   });
 }
