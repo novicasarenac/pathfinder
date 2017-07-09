@@ -19,6 +19,13 @@ export function onWsMessage(message) {
         break;
       }
 
+      case 'USER': {
+        const { user } = jsonMessage;
+
+        dispatch({ type: 'RESPONSE_RECEIVED', user });
+        break;
+      }
+
       default:
         console.log(message);
     }

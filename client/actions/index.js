@@ -10,7 +10,7 @@ export default {
   startGithubProfileAnalysis(username) {
     return (dispatch, getState) =>
       api
-        .userExists(username)
+        .startAnalysis(username, getState().ws.id)
         .catch((error) => {
           if (error.response) {
             throw new SubmissionError({
@@ -22,11 +22,7 @@ export default {
             });
           }
         })
-        .then((response) => {
-          api.startAnalysis(username, getState().ws.id);
-
-          dispatch({ type: 'RESPONSE_RECEIVED', user: response.data });
-
+        .then(() => {
           dispatch(push('/analysis'));
         });
   }
