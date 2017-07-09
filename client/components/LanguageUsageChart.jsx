@@ -1,40 +1,18 @@
+/* eslint no-mixed-operators: "off" */
+
 import React, { Component } from 'react';
 import { PieChart, Pie, Cell, Legend } from 'recharts';
-
-const data = [
-  { name: 'JavaScript', value: 400 },
-  { name: 'Java', value: 300 },
-  { name: 'Python', value: 400 },
-  { name: 'Ruby', value: 300 },
-  { name: 'C', value: 300 },
-  { name: 'C++', value: 200 },
-  { name: 'C#', value: 300 },
-  { name: 'Elixir', value: 400 },
-  { name: 'CSS', value: 300 },
-  { name: 'HTML', value: 200 }
-];
-const COLORS = [
-  '#0088FE',
-  '#00C49F',
-  '#FFBB28',
-  '#FF8042',
-  '#000',
-  '#432',
-  '#782',
-  '#745',
-  '#808',
-  '#243'
-];
+import GithubLanguageColors from '../utils/githubLanguageColors';
 
 const RADIAN = Math.PI / 180;
+
 const renderCustomizedLabel = ({
   cx,
   cy,
   midAngle,
   innerRadius,
   outerRadius,
-  percent,
-  index
+  percent
 }) => {
   const radius = innerRadius + (outerRadius - innerRadius) * 1.1;
   const x = cx + radius * Math.cos(-midAngle * RADIAN);
@@ -54,20 +32,29 @@ const renderCustomizedLabel = ({
 };
 
 class LanguageUsageChart extends Component {
+  languageStats() {
+    return Object.entries(this.props.data).map((language, percentage) => ({
+      name: language,
+      value: percentage
+    }));
+  }
+
   render() {
+    const githubColors = new GithubLanguageColors();
+
     return (
       <PieChart width={350} height={300} onMouseEnter={this.onPieEnter}>
         <Pie
           cx="50%"
           cy="50%"
-          data={data}
+          data={this.languageStats()}
           labelLine={false}
           label={renderCustomizedLabel}
           outerRadius={90}
           fill="#8884d8"
         >
-          {data.map((entry, index) =>
-            <Cell fill={COLORS[index % COLORS.length]} />
+          {this.props.data.map(entry =>
+            <Cell fill={githubColors.getColorForLanguage(entry.name)} />
           )}
         </Pie>
 

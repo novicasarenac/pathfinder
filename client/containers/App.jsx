@@ -7,7 +7,7 @@ import Websocket from 'react-websocket';
 import Footer from '../components/Footer';
 import routes from '../routes';
 import { homepage } from '../../package.json';
-import actions from '../actions';
+import { onWsMessage } from '../actions/ws';
 import '../styles/app.css';
 
 class App extends Component {
@@ -40,7 +40,7 @@ class App extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  handleWsMessage: message => dispatch(actions.onWsMessage(message))
+  handleWsMessage: message => dispatch(onWsMessage(message))
 });
 
 export default withRouter(connect(null, mapDispatchToProps)(App));

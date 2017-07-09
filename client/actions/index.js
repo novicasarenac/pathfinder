@@ -29,20 +29,5 @@ export default {
 
           dispatch(push('/analysis'));
         });
-  },
-
-  onWsMessage(message) {
-    return (dispatch) => {
-      const { type, id } = JSON.parse(message);
-
-      switch (type) {
-        case 'CONNECTED':
-          dispatch({ type: 'SOCKET_CONNECTED', id });
-          break;
-
-        default:
-          console.log(message);
-      }
-    };
   }
 };

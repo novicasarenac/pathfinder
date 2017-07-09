@@ -1,6 +1,7 @@
 const initialState = {
   isWaiting: false,
-  user: null
+  user: null,
+  languageUsageStats: null
 };
 
 const reducer = (state = initialState, action) => {
@@ -13,6 +14,7 @@ const reducer = (state = initialState, action) => {
 
     case 'RESPONSE_RECEIVED':
       return {
+        ...state,
         isWaiting: false,
         user: {
           name: action.user.name,
@@ -22,6 +24,12 @@ const reducer = (state = initialState, action) => {
           location: action.user.location,
           company: action.user.company
         }
+      };
+
+    case 'LANGUAGE_USAGE_STATS':
+      return {
+        ...state,
+        languageUsageStats: action.percentages
       };
 
     default:

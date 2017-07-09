@@ -26,7 +26,7 @@ class ProfileAnalysisResultPage extends Component {
   }
 
   render() {
-    const { user } = this.props;
+    const { user, languageUsageStats } = this.props;
 
     if (!user) return null;
 
@@ -37,7 +37,7 @@ class ProfileAnalysisResultPage extends Component {
 
         <Row className="block">
           <ProfileInfo user={user} />
-          <AnalysisResults />
+          <AnalysisResults languageStats={languageUsageStats} />
         </Row>
       </Col>
     );
