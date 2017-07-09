@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import createHistory from 'history/createBrowserHistory';
 import { ConnectedRouter } from 'react-router-redux';
-import { persistStore } from 'redux-persist';
+import { persistStore, asyncSessionStorage } from 'redux-persist';
 import configureStore from '../store';
 import App from './App';
 
@@ -16,7 +16,7 @@ class AppProvider extends Component {
   }
 
   componentWillMount() {
-    persistStore(store, {}, () => {
+    persistStore(store, { storage: asyncSessionStorage }, () => {
       this.setState({ rehydrated: true });
     });
   }

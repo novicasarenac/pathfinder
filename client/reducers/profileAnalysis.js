@@ -32,6 +32,9 @@ const reducer = (state = initialState, action) => {
         languageUsageStats: action.percentages
       };
 
+    case 'RESET':
+      return initialState;
+
     default:
       return state;
   }

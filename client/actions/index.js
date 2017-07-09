@@ -23,6 +23,7 @@ export default {
           }
         })
         .then((response) => {
+          dispatch({ type: 'RESET' });
           dispatch({ type: 'USER_RESPONSE_RECEIVED', user: response.data });
           dispatch(push('/analysis'));
         });
