@@ -4,6 +4,11 @@ import dataStorage from '../storage/dataStorage';
 import githubUserLanguagesAnalyze from '../engine/githubUserLanguagesAnalyze';
 
 const github = GitHubApi();
+github.authenticate({
+  type: 'oauth',
+  key: process.env.CLIENT_ID,
+  secret: process.env.CLIENT_SECRET
+});
 
 function getGithubUserFollowers(message) {
   github.users.getFollowersForUser({ username: message.username, per_page: 10 }, function getFollowers(err, res) { //eslint-disable-line
@@ -26,7 +31,7 @@ function getGithubUserFollowing(message) {
 }
 
 function getGithubUserRepositories(message) {
-  github.repos.getForUser({ username: message.username, per_page: 5 }, function getRepos(err, res) {
+  github.repos.getForUser({ username: message.username, per_page: 15 }, function getRepos(err, res) {
     const repos = res.data;
     dataStorage.addGithubUserRepos(message.id, repos);
     if (github.hasNextPage(res)) {

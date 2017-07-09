@@ -3,6 +3,11 @@ import dataStorage from '../storage/dataStorage';
 import notifications from '../services/notifications';
 
 const github = GitHubApi();
+github.authenticate({
+  type: 'oauth',
+  key: process.env.CLIENT_ID,
+  secret: process.env.CLIENT_SECRET
+});
 const languageAnalyzeResult = {};
 
 function computeAndNotify(id) {
@@ -16,6 +21,7 @@ function computeAndNotify(id) {
     percentage[key] = languageAnalyzeResult[id].result[key] * 100 / sum; //eslint-disable-line
   });
 
+  console.log(percentage);
   notifications.sendLanguagesStatistics(id, percentage);
 }
 
