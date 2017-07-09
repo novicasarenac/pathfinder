@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Col, Row, Button } from 'react-bootstrap';
 import ProfileInfo from './ProfileInfo';
+import AnalysisResults from './AnalysisResults';
 
 class ProfileAnalysisResultPage extends Component {
   componentWillMount() {
@@ -30,12 +31,13 @@ class ProfileAnalysisResultPage extends Component {
     if (!user) return null;
 
     return (
-      <Col md={12} lg={8} lgOffset={2} sm={12} className="page">
+      <Col lg={9} className="page container">
         {this.renderNavbar()}
         <hr />
 
-        <Row className="w-100">
+        <Row className="block">
           <ProfileInfo user={user} />
+          <AnalysisResults />
         </Row>
       </Col>
     );

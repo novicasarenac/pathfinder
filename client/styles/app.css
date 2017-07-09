@@ -50,8 +50,49 @@ div.page, .jumbotron {
   box-shadow: 0 8px 100px -6px black;
 }
 
+div.page {
+  min-height: 70vh;
+  height: 90vh;
+}
+
 img[alt="avatar"] {
   width: 250px;
   height: 250px;
   border-radius: 10px;
+}
+
+.block {
+  height: -webkit-calc(100% - 72px);
+  height: -moz-calc(100% - 72px);
+  height: calc(100% - 72px);
+}
+
+.square {
+  border-radius: 5px;
+  border: 0.5px solid #8f9696;
+  width: 47%;
+  height: 45%;
+  margin-right: 30px;
+  margin-bottom: 30px;
+  display: inline-block;
+}
+
+.language-stats {
+  background: #6e5494;
+  color: white;
+}
+
+.similar-followers {
+  background: #bd2c00;
+  color: white;
+}
+
+.recommended-repos {
+  background: #6cc644;
+  color: white;
+}
+
+.interesting-people {
+  background: #4078c0;
+  color: white;
 }
