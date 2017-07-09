@@ -1,6 +1,7 @@
 /* eslint no-nested-ternary: "off" */
 
 import React, { Component } from 'react';
+import { PropagateLoader } from 'react-spinners';
 import {
   Col,
   Jumbotron,
@@ -37,44 +38,64 @@ const renderInput = ({ input, placeholder, type, meta: { touched, error } }) =>
   </div>);
 
 class GithubProfileForm extends Component {
+  renderSpinner() {
+    return (
+      <Jumbotron>
+        <p className="display-4 text-center text-success">
+          <b>Analyzing</b>
+        </p>
+        <hr />
+        <div className="d-flex justify-content-center">
+          <PropagateLoader color="green" loading={this.props.isWaiting} />
+        </div>
+      </Jumbotron>
+    );
+  }
+
+  renderForm() {
+    return (
+      <Jumbotron>
+        <Button bsSize="small" bsStyle="link" onClick={this.props.handleBack}>
+          <i className="fa fa-arrow-left" />
+          &nbsp; Back to Main page
+        </Button>
+
+        <p className="lead text-center mt-3">
+          Please, enter <strong>Github</strong> username to start analysis. You
+          will get usefull information such as given user&#39;s similiar
+          followers, language usage stats, recommended open source repos etc.
+        </p>
+        <hr className="my-4" />
+
+        <Col lg={6} className="container">
+          <Form onSubmit={this.props.handleSubmit}>
+            <Field
+              name="username"
+              component={renderInput}
+              type="text"
+              placeholder="Github username"
+            />
+
+            <div className="text-center">
+              <Button
+                className="mt-3"
+                type="submit"
+                bsStyle="success"
+                disabled={this.props.pristine}
+              >
+                Analyse Profile
+              </Button>
+            </div>
+          </Form>
+        </Col>
+      </Jumbotron>
+    );
+  }
+
   render() {
     return (
       <Col md={6} mdOffset={3} sm={12} className="h-75">
-        <Jumbotron>
-          <Button bsSize="small" bsStyle="link" onClick={this.props.handleBack}>
-            <i className="fa fa-arrow-left" />
-            &nbsp; Back to Main page
-          </Button>
-
-          <p className="lead text-center mt-3">
-            Please, enter <strong>Github</strong> username to start analysis.
-            You will get usefull information such as given user&#39;s similiar
-            followers, language usage stats, recommended open source repos etc.
-          </p>
-          <hr className="my-4" />
-
-          <Col lg={6} className="container">
-            <Form onSubmit={this.props.handleSubmit}>
-              <Field
-                name="username"
-                component={renderInput}
-                type="text"
-                placeholder="Github username"
-              />
-
-              <div className="text-center">
-                <Button
-                  className="mt-3"
-                  type="submit"
-                  bsStyle="success"
-                  disabled={this.props.pristine}
-                >
-                  Analyse Profile
-                </Button>
-              </div>
-            </Form>
-          </Col>
-        </Jumbotron>
+        {this.props.isWaiting ? this.renderSpinner() : this.renderForm()}
       </Col>
     );
   }

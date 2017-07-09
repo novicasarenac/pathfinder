@@ -22,21 +22,12 @@ export default {
             });
           }
         })
-        .then(() => api.startAnalysis(username, getState().ws.id));
-  },
+        .then((response) => {
+          api.startAnalysis(username, getState().ws.id);
 
-  onWsMessage(message) {
-    return (dispatch) => {
-      const { type, id } = JSON.parse(message);
+          dispatch({ type: 'RESPONSE_RECEIVED', user: response.data });
 
-      switch (type) {
-        case 'CONNECTED':
-          dispatch({ type: 'SOCKET_CONNECTED', id });
-          break;
-
-        default:
-          console.log(message);
-      }
-    };
+          dispatch(push('/analysis'));
+        });
   }
 };

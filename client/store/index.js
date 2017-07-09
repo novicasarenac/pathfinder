@@ -1,12 +1,18 @@
 import thunk from 'redux-thunk';
-import { createStore, applyMiddleware } from 'redux';
+import { compose, createStore, applyMiddleware } from 'redux';
 import { routerMiddleware } from 'react-router-redux';
+import { autoRehydrate } from 'redux-persist';
 import reducers from '../reducers';
 
 const configureStore = (history) => {
   const middleware = [routerMiddleware(history), thunk];
 
-  return createStore(reducers, applyMiddleware(...middleware));
+  const store = createStore(
+    reducers,
+    compose(autoRehydrate(), applyMiddleware(...middleware))
+  );
+
+  return store;
 };
 
 export default configureStore;
