@@ -33,7 +33,7 @@
     "font-awesome": "^4.7.0",
     "github": "^9.2.0",
     "history": "^4.6.3",
-    "js-yaml": "^3.9.0",
+    "json-loader": "^0.5.4",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-bootstrap": "^0.31.0",
@@ -50,7 +50,8 @@
     "redux-form": "^6.8.0",
     "redux-persist": "^4.8.2",
     "redux-thunk": "^2.2.0",
-    "ws": "^3.0.0"
+    "ws": "^3.0.0",
+    "yaml-loader": "^0.5.0"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",

@@ -58,7 +58,7 @@ module.exports = {
 
   plugins: [
     new HtmlWebpackPlugin({
-      template: join('client/index.html'),
+      template: join('client/public/index.html'),
       inject: 'body'
     }),
 
