@@ -1,4 +1,4 @@
-import Languages from 'json-loader!yaml-loader!../public/languages.yml';
+import languages from 'json-loader!yaml-loader!../public/languages.yml';
 
 export default {
   getColorForLanguage(language) {
@@ -6,6 +6,6 @@ export default {
       return '#8f9696';
     }
 
-    return Languages[language].color;
+    return languages[language] ? languages[language].color : '#718087';
   }
 };
