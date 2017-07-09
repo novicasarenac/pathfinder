@@ -6,7 +6,8 @@
   "scripts": {
     "start": "npm run build && concurrently \"npm run server\" \"npm run client\"",
     "build": "rimraf dist/ && babel ./server --out-dir dist/ --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log",
-    "server": "node dist/server.js",
+    "server": "env-cmd .env.local node dist/server.js",
+    "debug": "env-cmd .env.local node --inspect dist/server.js",
     "client": "env-cmd .env.local node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --hot --inline --history-api-fallback"
   },
   "repository": {
