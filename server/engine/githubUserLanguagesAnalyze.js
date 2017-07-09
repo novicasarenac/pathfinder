@@ -1,5 +1,6 @@
 import GitHubApi from 'github';
 import dataStorage from '../storage/dataStorage';
+import notifications from '../services/notifications';
 
 const github = GitHubApi();
 const languageAnalyzeResult = {};
@@ -12,16 +13,16 @@ function computeAndNotify(id) {
   });
 
   Object.keys(languageAnalyzeResult[id].result).forEach((key) => {
-    percentage[key] = languageAnalyzeResult[id].result[key] * 100 / sum;
+    percentage[key] = languageAnalyzeResult[id].result[key] * 100 / sum; //eslint-disable-line
   });
 
-  console.log(percentage);
+  notifications.sendLanguagesStatistics(id, percentage);
 }
 
 function addToLanguageAnalyzeResult(id, numberOfRepositories, data) {
   Object.keys(data).forEach((key) => {
-    if (languageAnalyzeResult[id].result.hasOwnProperty(key)) {
-      languageAnalyzeResult[id].result[key] = languageAnalyzeResult[id].result[key] + data[key];
+    if (languageAnalyzeResult[id].result.hasOwnProperty(key)) { //eslint-disable-line
+      languageAnalyzeResult[id].result[key] = languageAnalyzeResult[id].result[key] + data[key];  //eslint-disable-line
     } else {
       languageAnalyzeResult[id].result[key] = data[key];
     }
@@ -42,7 +43,7 @@ function analyzeLanguages(id) {
   const repositories = dataStorage.getGithubUserRepositories(id);
 
   repositories.forEach((repository) => {
-    github.repos.getLanguages({ owner: repository.owner.login, repo: repository.name }, (err, res) => {
+    github.repos.getLanguages({ owner: repository.owner.login, repo: repository.name }, (err, res) => { //eslint-disable-line
       addToLanguageAnalyzeResult(id, repositories.length, res.data);
     });
   });

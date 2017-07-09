@@ -8,4 +8,12 @@ function sendUser(id, user) {
   });
 }
 
-export default { sendUser };
+function sendLanguagesStatistics(id, percentage) {
+  wss.clients.forEach((client) => {
+    if(client['_ultron'].id === id) {
+      client.send(JSON.stringify({ type: 'LANG-STATS', percentage }));
+    }
+  });
+}
+
+export default { sendUser, sendLanguagesStatistics };
