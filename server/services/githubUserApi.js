@@ -49,7 +49,7 @@ function handleUser(message, response) {
     } else {
       const user = res.data;
       dataStorage.addGithubUser(message.id);
-      response.send({ id: message.id, user });
+      response.send(user);
 
       getGithubUserFollowers(message);
       getGithubUserFollowing(message);
