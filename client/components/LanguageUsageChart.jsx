@@ -46,6 +46,7 @@ class LanguageUsageChart extends Component {
           cx="50%"
           cy="50%"
           data={this.languageStats()}
+          dataKey="value"
           labelLine={false}
           label={renderCustomizedLabel}
           outerRadius={95}
@@ -53,7 +54,7 @@ class LanguageUsageChart extends Component {
         >
           {this.languageStats().map(entry =>
             (<Cell
-              id={entry.name}
+              key={entry.name}
               fill={utils.getColorForLanguage(entry.name)}
             />)
           )}

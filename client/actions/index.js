@@ -12,6 +12,8 @@ export default {
       api
         .startAnalysis(username, getState().ws.id)
         .catch((error) => {
+          dispatch({ type: 'USER_RESPONSE_RECEIVED', user: null });
+
           if (error.response) {
             throw new SubmissionError({
               username: `User ${username} does not exists!`
