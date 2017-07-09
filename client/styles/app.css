@@ -20,6 +20,7 @@
 
 body, #app {
   height: 100vh;
+  margin: 0;
 }
 
 body {
@@ -28,6 +29,10 @@ body {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+}
+
+.scrollable-container {
+  overflow-y: auto;
 }
 
 h1 {
@@ -74,7 +79,7 @@ img[alt="avatar"] {
   height: 45%;
   margin-right: 30px;
   margin-bottom: 30px;
-  display: inline-block;
+  display: inline-table;
 }
 
 .language-stats {

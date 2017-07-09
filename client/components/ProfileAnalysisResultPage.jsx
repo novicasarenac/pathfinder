@@ -31,7 +31,7 @@ class ProfileAnalysisResultPage extends Component {
     if (!user) return null;
 
     return (
-      <Col lg={9} className="page container">
+      <Col lg={9} className="page container scrollable-container">
         {this.renderNavbar()}
         <hr />
 
