@@ -16,7 +16,14 @@ function mapUserState(user) {
 const initialState = {
   isWaiting: false,
   user: null,
-  languageUsageStats: null
+  languageUsageStats: null,
+  similarFriends: [
+    {
+      username: 'novicasarenac',
+      avatar: 'https://avatars0.githubusercontent.com/u/21954666?v=3',
+      profileLink: 'http://github.com/novicasarenac'
+    }
+  ]
 };
 
 const reducer = (state = initialState, action) => {
@@ -38,6 +45,12 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         languageUsageStats: action.percentages
+      };
+
+    case 'SIMILAR_FRIENDS_STATS':
+      return {
+        ...state,
+        similarFriends: action.friends
       };
 
     case 'RESET':

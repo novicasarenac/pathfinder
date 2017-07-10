@@ -19,6 +19,13 @@ export function onWsMessage(message) {
         break;
       }
 
+      case 'SIMILAR_FRIENDS': {
+        const { friends } = jsonMessage;
+
+        dispatch({ type: 'SIMILAR_FRIENDS_STATS', friends });
+        break;
+      }
+
       default:
         console.log(message);
     }
