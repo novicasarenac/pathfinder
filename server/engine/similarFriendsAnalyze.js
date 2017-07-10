@@ -31,7 +31,10 @@ function computeFriendStatistics(id, repoOwnerUsername) {
   }
 
   const similarity = cosineSimilarity.computeSimilarity(dataStorage.getGithubUserLanguagesStatistic(id), percentages);
-  console.log('similarity with ' + repoOwnerUsername + ': ' + similarity);
+  if (!dataStorage.containsGithubUserSimilarityPercentage(id, repoOwnerUsername)) {
+    dataStorage.addGithubUserSimilarityPercentage(id, repoOwnerUsername, similarity);
+    console.log('similarity with ' + repoOwnerUsername + ': ' + similarity);
+  }
 }
 
 function addToFriendsStatistics(id, numberOfRepositories, repoOwnerUsername, languages) {
@@ -68,15 +71,35 @@ function computeRepositoriesStatistics(id, username) {
 }
 
 function computeSimilarityWithFollowers(id) {
-  friendsStatistics[id] = {};
+  if (!friendsStatistics.hasOwnProperty(id)) {
+    friendsStatistics[id] = {};
+  }
   dataStorage.getGithubUserFollowers(id).forEach((follower) => {
-    friendsStatistics[id][follower.login] = {
-      analyzedNumber: 0,
-      result: {}
-    }
+    if (!friendsStatistics[id].hasOwnProperty(follower.login)) {
+      friendsStatistics[id][follower.login] = {
+        analyzedNumber: 0,
+        result: {}
+      };
 
-    computeRepositoriesStatistics(id, follower.login);
+      computeRepositoriesStatistics(id, follower.login);
+    }
   });
 }
 
-export default { computeSimilarityWithFollowers };
+function computeSimilarityWithFollowing(id) {
+  if (!friendsStatistics.hasOwnProperty(id)) {
+    friendsStatistics[id] = {};
+  }
+  dataStorage.getGithubUserFollowing(id).forEach((following) => {
+    if (!friendsStatistics[id].hasOwnProperty(following.login)) {
+      friendsStatistics[id][following.login] = {
+        analyzedNumber: 0,
+        result: {}
+      };
+
+      computeRepositoriesStatistics(id, following.login);
+    }
+  });
+}
+
+export default { computeSimilarityWithFollowers, computeSimilarityWithFollowing };

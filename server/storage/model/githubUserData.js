@@ -23,6 +23,13 @@ class GithubUserData { // eslint-disable-line
     this.similarityPercentages[username] = percentage;
   }
 
+  containsSimilarityPercentage(username) {
+    if (this.similarityPercentages.hasOwnProperty(username)) {
+      return true;
+    }
+    return false;
+  }
+
   setLanguagesStatistic(statistics) {
     this.languagesStatistic = statistics;
   }

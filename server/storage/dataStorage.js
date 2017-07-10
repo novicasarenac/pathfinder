@@ -19,6 +19,14 @@ function addGithubUserRepos(id, newRepositories) {
   githubUserData[id].addRepositories(newRepositories);
 }
 
+function addGithubUserSimilarityPercentage(id, username, percentage) {
+  githubUserData[id].addSimilarityPercentage(username, percentage);
+}
+
+function containsGithubUserSimilarityPercentage(id, username) {
+  return githubUserData[id].containsSimilarityPercentage(username);
+}
+
 function setGithubUserLanguagesStatistic(id, statistic) {
   githubUserData[id].setLanguagesStatistic(statistic);
 }
@@ -44,6 +52,8 @@ export default {
   addGithubUserFollowers,
   addGithubUserFollowing,
   addGithubUserRepos,
+  addGithubUserSimilarityPercentage,
+  containsGithubUserSimilarityPercentage,
   setGithubUserLanguagesStatistic,
   getGithubUserRepositories,
   getGithubUserFollowers,

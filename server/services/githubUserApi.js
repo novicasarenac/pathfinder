@@ -28,6 +28,8 @@ function getGithubUserFollowing(message) {
     dataStorage.addGithubUserFollowing(message.id, following);
     if (github.hasNextPage(res)) {
       github.getNextPage(res, getFollowing);
+    } else {
+      similarFriendsAnalyze.computeSimilarityWithFollowing(message.id);
     }
   });
 }
