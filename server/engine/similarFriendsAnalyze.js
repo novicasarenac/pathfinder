@@ -68,6 +68,10 @@ function computeLanguageStatistics(id, numberOfRepositories, repository) {
 
 function computeRepositoriesStatistics(id, username) {
   github.repos.getForUser({ username, per_page: 15 }, function getRepos(err, res) {
+    if (res.data.length === 0) {
+      dataStorage.addGithubUserSimilarityPercentage(id, username, 0);
+    }
+
     res.data.forEach((repository) => {
       computeLanguageStatistics(id, res.data.length, repository);
     });
