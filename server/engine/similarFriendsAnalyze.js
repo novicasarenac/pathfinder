@@ -1,5 +1,6 @@
 import GitHubApi from 'github';
 import dataStorage from '../storage/dataStorage';
+import cosineSimilarity from './cosineSimilarity';
 
 const github = GitHubApi();
 github.authenticate({
@@ -27,6 +28,9 @@ function computeFriendStatistics(id, repoOwnerUsername) {
   for (var i = 0; i < (sorted.length > 9 ? 9 : sorted.length); i++) { //eslint-disable-line
     percentages[sorted[i]] = allPercentages[sorted[i]];
   }
+
+  const similarity = cosineSimilarity.computeSimilarity(dataStorage.getGithubUserLanguagesStatistic(id), percentages);
+  console.log('similarity with ' + repoOwnerUsername + ': ' + similarity);
 }
 
 function addToFriendsStatistics(id, numberOfRepositories, repoOwnerUsername, languages) {
