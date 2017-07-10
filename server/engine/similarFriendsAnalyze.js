@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import GitHubApi from 'github';
 import dataStorage from '../storage/dataStorage';
 import cosineSimilarity from './cosineSimilarity';

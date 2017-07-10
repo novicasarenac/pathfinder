@@ -61,11 +61,19 @@ function analyzeLanguages(id) {
 
   const repositories = dataStorage.getGithubUserRepositories(id);
 
+  const promises = [];
   repositories.forEach((repository) => {
-    github.repos.getLanguages({ owner: repository.owner.login, repo: repository.name }, (err, res) => { //eslint-disable-line
-      addToLanguageAnalyzeResult(id, repositories.length, res.data);
-    });
+    promises.push(new Promise((resolve, reject) => {
+      github.repos.getLanguages({ owner: repository.owner.login, repo: repository.name }, (err, res) => { //eslint-disable-line
+        if (err) {
+          reject(err);
+        } else {
+          resolve({ id, repositoriesLength: repositories.length, data: res.data });
+        }
+      });
+    }));
   });
+  return promises;
 }
 
-export default { analyzeLanguages };
+export default { analyzeLanguages, addToLanguageAnalyzeResult };
