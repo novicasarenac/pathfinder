@@ -25,7 +25,7 @@ class App extends Component {
           Fork me on GitHub
         </GitHubForkRibbon>
 
-        <Col className="h-100 d-flex align-items-center justify-content-center">
+        <Col className="h-100 d-flex justify-content-center">
           {routes}
         </Col>
 

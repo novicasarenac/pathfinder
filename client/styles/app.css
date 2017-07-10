@@ -57,19 +57,27 @@ div.page, .jumbotron {
 
 div.page {
   min-height: 70vh;
-  height: 90vh;
+  height: 95vh;
+  margin-top: 15px;
 }
 
 img[alt="avatar"] {
   width: 250px;
   height: 250px;
   border-radius: 10px;
+  border: 1px solid gray;
 }
 
-.block {
+.block-75 {
   height: -webkit-calc(100% - 72px);
   height: -moz-calc(100% - 72px);
   height: calc(100% - 72px);
+}
+
+.block-40 {
+  height: -webkit-calc(100% - 40px);
+  height: -moz-calc(100% - 40px);
+  height: calc(100% - 40px);
 }
 
 .square {
@@ -87,17 +95,44 @@ img[alt="avatar"] {
   color: white;
 }
 
-.similar-followers {
-  background: #bd2c00;
+.similar-friends {
+  background: #4078c0;
   color: white;
 }
 
 .recommended-repos {
-  background: #6cc644;
+  background: #bd2c00;
   color: white;
 }
 
 .interesting-people {
-  background: #4078c0;
+  background: #6cc644;
   color: white;
+}
+
+.list-item {
+  padding: 4px;
+  height: 20%;
+  background-color: #fafafa;
+  text-align: justify;
+}
+
+.list-item > img {
+  border: 1px solid gray;
+  margin-right: 10px;
+}
+
+.list-item > .btn:focus,
+.list-item > a:focus {
+  outline: 0 !important;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+}
+
+.no-padding {
+  padding: 0;
+}
+
+.vertical-center {
+  margin-top: 25%;
 }

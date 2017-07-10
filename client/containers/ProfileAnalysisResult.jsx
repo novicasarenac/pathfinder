@@ -4,7 +4,8 @@ import actions from '../actions';
 
 const mapStateToProps = state => ({
   user: state.profileAnalysis.user,
-  languageUsageStats: state.profileAnalysis.languageUsageStats
+  languageUsageStats: state.profileAnalysis.languageUsageStats,
+  similarFriends: state.profileAnalysis.similarFriends
 });
 
 const mapDispatchToProps = dispatch => ({

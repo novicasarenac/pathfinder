@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { BounceLoader } from 'react-spinners';
 import LanguageUsageChart from './LanguageUsageChart';
+import FriendList from './FriendList';
 
 const Spinner = ({ color }) =>
   (<div className="justify-content-center mt-5">
@@ -26,16 +27,16 @@ class AnalysisResults extends Component {
     );
   }
 
-  renderSimilarFollowers() {
+  renderSimilarFriends() {
     return (
       <Col className="square container">
-        <Row className="similar-followers justify-content-center">
-          <h4 className="mt-1 text-center">Followers Like You</h4>
+        <Row className="similar-friends justify-content-center">
+          <h4 className="mt-1 text-center">Friends Like You</h4>
         </Row>
-        <Row className="justify-content-center">
-          {this.props.similarFollowers
-            ? <LanguageUsageChart data={this.props.similarFollowers} />
-            : <Spinner color="#bd2c00" />}
+        <Row className="justify-content-center block-40">
+          {this.props.similarFriends
+            ? <FriendList friends={this.props.similarFriends} />
+            : <Spinner color="#4078c0" />}
         </Row>
       </Col>
     );
@@ -50,7 +51,7 @@ class AnalysisResults extends Component {
         <Row className="justify-content-center">
           {this.props.recommendedRepos
             ? <LanguageUsageChart data={this.props.recommendedRepos} />
-            : <Spinner color="#6cc644" />}
+            : <Spinner color="#bd2c00" />}
         </Row>
       </Col>
     );
@@ -65,7 +66,7 @@ class AnalysisResults extends Component {
         <Row className="justify-content-center">
           {this.props.interestingPeople
             ? <LanguageUsageChart data={this.props.interestingPeople} />
-            : <Spinner color="#4078c0" />}
+            : <Spinner color="#6cc644" />}
         </Row>
       </Col>
     );
@@ -75,7 +76,7 @@ class AnalysisResults extends Component {
     return (
       <Col lg={9}>
         {this.renderLanguageUsageStats()}
-        {this.renderSimilarFollowers()}
+        {this.renderSimilarFriends()}
         {this.renderRecommendedRepos()}
         {this.renderInterestingPeople()}
       </Col>

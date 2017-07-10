@@ -41,7 +41,7 @@ class LanguageUsageChart extends Component {
 
   render() {
     return (
-      <PieChart width={360} height={310} onMouseEnter={this.onPieEnter}>
+      <PieChart width={360} height={330} onMouseEnter={this.onPieEnter}>
         <Pie
           cx="50%"
           cy="50%"
@@ -49,7 +49,7 @@ class LanguageUsageChart extends Component {
           dataKey="value"
           labelLine={false}
           label={renderCustomizedLabel}
-          outerRadius={95}
+          outerRadius={100}
           fill="#8884d8"
         >
           {this.languageStats().map(entry =>

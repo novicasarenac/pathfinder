@@ -26,18 +26,21 @@ class ProfileAnalysisResultPage extends Component {
   }
 
   render() {
-    const { user, languageUsageStats } = this.props;
+    const { user, languageUsageStats, similarFriends } = this.props;
 
     if (!user) return null;
 
     return (
-      <Col lg={9} className="page container scrollable-container">
+      <Col lg={10} className="page container scrollable-container">
         {this.renderNavbar()}
         <hr />
 
-        <Row className="block">
+        <Row className="block-75">
           <ProfileInfo user={user} />
-          <AnalysisResults languageStats={languageUsageStats} />
+          <AnalysisResults
+            languageStats={languageUsageStats}
+            similarFriends={similarFriends}
+          />
         </Row>
       </Col>
     );
