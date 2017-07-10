@@ -10,8 +10,23 @@ github.authenticate({
 
 const friendsStatistics = {};
 
-function computeFriendStatistics(id) {
-  console.log('l');
+function computeFriendStatistics(id, repoOwnerUsername) {
+  const percentages = {};
+  const allPercentages = {};
+  let sum = 0;
+  Object.keys(friendsStatistics[id][repoOwnerUsername].result).forEach((key) => {
+    sum += friendsStatistics[id][repoOwnerUsername].result[key];
+  });
+
+  Object.keys(friendsStatistics[id][repoOwnerUsername].result).forEach((key) => {
+    allPercentages[key] = friendsStatistics[id][repoOwnerUsername].result[key] * 100 / sum;
+  });
+
+  const sorted = Object.keys(allPercentages).sort((a, b) => allPercentages[b] - allPercentages[a]);
+
+  for (var i = 0; i < (sorted.length > 9 ? 9 : sorted.length); i++) { //eslint-disable-line
+    percentages[sorted[i]] = allPercentages[sorted[i]];
+  }
 }
 
 function addToFriendsStatistics(id, numberOfRepositories, repoOwnerUsername, languages) {
@@ -25,7 +40,7 @@ function addToFriendsStatistics(id, numberOfRepositories, repoOwnerUsername, lan
 
   friendsStatistics[id][repoOwnerUsername].analyzedNumber += 1;
   if (numberOfRepositories === friendsStatistics[id][repoOwnerUsername].analyzedNumber) {
-    computeFriendStatistics(id);
+    computeFriendStatistics(id, repoOwnerUsername);
   }
 }
 
