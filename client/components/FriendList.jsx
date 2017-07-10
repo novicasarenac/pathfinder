@@ -1,12 +1,5 @@
 import React, { Component } from 'react';
-import {
-  Button,
-  ListGroup,
-  ListGroupItem,
-  Col,
-  Row,
-  Image
-} from 'react-bootstrap';
+import { Button, ListGroup, ListGroupItem, Col, Image } from 'react-bootstrap';
 
 const Friend = ({ username, avatar, profileLink }) =>
   (<ListGroupItem className="list-item justify-content-left">
@@ -45,7 +38,10 @@ class FriendList extends Component {
     return (
       <Col sm={12} className="no-padding h-100">
         {this.props.friends.length === 0
-          ? <h3 className="lead">You have no followers or following yet</h3>
+          ? <h1 className="text-center lead vertical-center">
+              Looks like you have no followers and you are not following anybody
+              yet.
+          </h1>
           : this.renderFriends()}
       </Col>
     );
