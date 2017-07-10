@@ -51,7 +51,7 @@ function addToFriendsStatistics(id, numberOfRepositories, repoOwnerUsername, lan
   });
 
   friendsStatistics[id][repoOwnerUsername].analyzedNumber += 1;
-  if (numberOfRepositories === friendsStatistics[id][repoOwnerUsername].analyzedNumber) {
+  if (numberOfRepositories === friendsStatistics[id][repoOwnerUsername].analyzedNumber && Object.keys(languages).length !== 0) {
     computeFriendStatistics(id, repoOwnerUsername);
   }
 }
