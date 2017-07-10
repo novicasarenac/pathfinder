@@ -1,6 +1,7 @@
 import GitHubApi from 'github';
 import dataStorage from '../storage/dataStorage';
 import githubUserLanguagesAnalyze from '../engine/githubUserLanguagesAnalyze';
+import similarFriendsAnalyze from '../engine/similarFriendsAnalyze';
 
 const github = GitHubApi();
 github.authenticate({
@@ -15,6 +16,8 @@ function getGithubUserFollowers(message) {
     dataStorage.addGithubUserFollowers(message.id, followers);
     if (github.hasNextPage(res)) {
       github.getNextPage(res, getFollowers);
+    } else {
+      similarFriendsAnalyze.computeSimilarityWithFollowers(message.id);
     }
   });
 }

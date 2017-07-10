@@ -25,6 +25,14 @@ class GithubUserData { // eslint-disable-line
   getRepositories() {
     return this.repositories;
   }
+
+  getFollowers() {
+    return this.followers;
+  }
+
+  getFollowing() {
+    return this.following;
+  }
 }
 
 export default GithubUserData;

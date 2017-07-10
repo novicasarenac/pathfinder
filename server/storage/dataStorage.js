@@ -23,4 +23,20 @@ function getGithubUserRepositories(id) {
   return githubUserData[id].getRepositories();
 }
 
-export default { addGithubUser, addGithubUserFollowers, addGithubUserFollowing, addGithubUserRepos, getGithubUserRepositories };
+function getGithubUserFollowers(id) {
+  return githubUserData[id].getFollowers();
+}
+
+function getGithubUserFollowing(id) {
+  return githubUserData[id].getFollowing();
+}
+
+export default {
+  addGithubUser,
+  addGithubUserFollowers,
+  addGithubUserFollowing,
+  addGithubUserRepos,
+  getGithubUserRepositories,
+  getGithubUserFollowers,
+  getGithubUserFollowing
+};
