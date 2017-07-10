@@ -3,7 +3,7 @@ class GithubUserData { // eslint-disable-line
     this.followers = [];
     this.following = [];
     this.repositories = [];
-    this.languageStatistics = {};
+    this.languagesStatistic = {};
     this.similarityPercentages = [];
   }
 
@@ -23,9 +23,8 @@ class GithubUserData { // eslint-disable-line
     this.similarityPercentages[username] = percentage;
   }
 
-
-  setLanguageStatistics(statistics) {
-    this.languageStatistics = statistics;
+  setLanguagesStatistic(statistics) {
+    this.languagesStatistic = statistics;
   }
 
   getRepositories() {
@@ -40,8 +39,8 @@ class GithubUserData { // eslint-disable-line
     return this.following;
   }
 
-  getLanguageStatistics() {
-    return this.languageStatistics;
+  getLanguagesStatistic() {
+    return this.languagesStatistic;
   }
 }
 

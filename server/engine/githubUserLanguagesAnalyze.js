@@ -27,6 +27,8 @@ function computeAndNotify(id) {
   for(var i = 0; i < (sorted.length > 9 ? 9 : sorted.length); i++) { //eslint-disable-line
     percentages[sorted[i]] = allPercentages[sorted[i]];
   }
+  dataStorage.setGithubUserLanguagesStatistic(id, percentages);
+
   if (sorted.length > 9) {
     const percentagesSum = Object.keys(percentages).reduce((acc, b) => acc + percentages[b], 0);
     percentages['Other'] = 100 - percentagesSum;
