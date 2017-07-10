@@ -3,6 +3,8 @@ class GithubUserData { // eslint-disable-line
     this.followers = [];
     this.following = [];
     this.repositories = [];
+    this.languagesStatistic = {};
+    this.similarityPercentages = [];
   }
 
   addFollowers(newFollowers) {
@@ -17,8 +19,65 @@ class GithubUserData { // eslint-disable-line
     this.repositories = this.repositories.concat(newRepositories);
   }
 
+  addSimilarityPercentage(username, percentage) {
+    this.similarityPercentages[username] = percentage;
+  }
+
+  containsSimilarityPercentage(username) {
+    if (this.similarityPercentages.hasOwnProperty(username)) {
+      return true;
+    }
+    return false;
+  }
+
+  setLanguagesStatistic(statistics) {
+    this.languagesStatistic = statistics;
+  }
+
   getRepositories() {
     return this.repositories;
+  }
+
+  getFollowers() {
+    return this.followers;
+  }
+
+  getFollowing() {
+    return this.following;
+  }
+
+  getLanguagesStatistic() {
+    return this.languagesStatistic;
+  }
+
+  getNumberOfFriends() {
+    let numberOfFriends = this.following.length;
+    this.followers.forEach((follower) => {
+      if (!this.following.some(followingUser => follower.login === followingUser.login)) {
+        numberOfFriends++;
+      }
+    });
+    return numberOfFriends;
+  }
+
+  getSimilarityPercentage() {
+    return this.similarityPercentages;
+  }
+
+  getFriendByUsername(username) {
+    let retVal = {};
+    this.following.forEach((followingUser) => {
+      if (followingUser.login === username) {
+        retVal = followingUser;
+      }
+    });
+    this.followers.forEach((follower) => {
+      if (follower.login === username) {
+        retVal = follower;
+      }
+    });
+
+    return retVal;
   }
 }
 

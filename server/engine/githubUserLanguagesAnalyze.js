@@ -27,6 +27,8 @@ function computeAndNotify(id) {
   for(var i = 0; i < (sorted.length > 9 ? 9 : sorted.length); i++) { //eslint-disable-line
     percentages[sorted[i]] = allPercentages[sorted[i]];
   }
+  dataStorage.setGithubUserLanguagesStatistic(id, percentages);
+
   if (sorted.length > 9) {
     const percentagesSum = Object.keys(percentages).reduce((acc, b) => acc + percentages[b], 0);
     percentages['Other'] = 100 - percentagesSum;
@@ -59,11 +61,19 @@ function analyzeLanguages(id) {
 
   const repositories = dataStorage.getGithubUserRepositories(id);
 
+  const promises = [];
   repositories.forEach((repository) => {
-    github.repos.getLanguages({ owner: repository.owner.login, repo: repository.name }, (err, res) => { //eslint-disable-line
-      addToLanguageAnalyzeResult(id, repositories.length, res.data);
-    });
+    promises.push(new Promise((resolve, reject) => {
+      github.repos.getLanguages({ owner: repository.owner.login, repo: repository.name }, (err, res) => { //eslint-disable-line
+        if (err) {
+          reject(err);
+        } else {
+          resolve({ id, repositoriesLength: repositories.length, data: res.data });
+        }
+      });
+    }));
   });
+  return promises;
 }
 
-export default { analyzeLanguages };
+export default { analyzeLanguages, addToLanguageAnalyzeResult };

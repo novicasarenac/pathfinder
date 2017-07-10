@@ -1,6 +1,7 @@
 import GitHubApi from 'github';
 import dataStorage from '../storage/dataStorage';
 import githubUserLanguagesAnalyze from '../engine/githubUserLanguagesAnalyze';
+import similarFriendsAnalyze from '../engine/similarFriendsAnalyze';
 
 const github = GitHubApi();
 github.authenticate({
@@ -15,6 +16,8 @@ function getGithubUserFollowers(message) {
     dataStorage.addGithubUserFollowers(message.id, followers);
     if (github.hasNextPage(res)) {
       github.getNextPage(res, getFollowers);
+    } else {
+      similarFriendsAnalyze.computeSimilarityWithFollowers(message.id);
     }
   });
 }
@@ -25,6 +28,8 @@ function getGithubUserFollowing(message) {
     dataStorage.addGithubUserFollowing(message.id, following);
     if (github.hasNextPage(res)) {
       github.getNextPage(res, getFollowing);
+    } else {
+      similarFriendsAnalyze.computeSimilarityWithFollowing(message.id);
     }
   });
 }
@@ -36,7 +41,13 @@ function getGithubUserRepositories(message) {
     if (github.hasNextPage(res)) {
       github.getNextPage(res, getRepos);
     } else {
-      githubUserLanguagesAnalyze.analyzeLanguages(message.id);
+      Promise.all(githubUserLanguagesAnalyze.analyzeLanguages(message.id)).then((values) => {
+        values.forEach((value) => {
+          githubUserLanguagesAnalyze.addToLanguageAnalyzeResult(value.id, value.repositoriesLength, value.data);
+        });
+        getGithubUserFollowers(message);
+        getGithubUserFollowing(message);
+      });
     }
   });
 }
@@ -51,8 +62,6 @@ function handleUser(message, response) {
       dataStorage.addGithubUser(message.id);
       response.send(user);
 
-      getGithubUserFollowers(message);
-      getGithubUserFollowing(message);
       getGithubUserRepositories(message);
     }
   });
