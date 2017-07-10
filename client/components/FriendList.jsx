@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
-import { Button, ListGroup, ListGroupItem, Col, Image } from 'react-bootstrap';
+import {
+  Button,
+  ListGroup,
+  ListGroupItem,
+  Col,
+  Row,
+  Image
+} from 'react-bootstrap';
 
 const Friend = ({ username, avatar, profileLink }) =>
   (<ListGroupItem className="list-item justify-content-center">
@@ -10,28 +17,36 @@ const Friend = ({ username, avatar, profileLink }) =>
       alt="Avatar"
       className="img-fluid rounded"
     />
-    <i className="fa fa-github fa-2x ml-3 mr-1" />
-    <Button href={profileLink} target="tab" className="no-padding">
-      <b className="lead">
+    <i className="fa fa-github fa-2x ml-1 mr-1" />
+    <Button href={profileLink} target="tab" className="no-padding mr-1">
+      <strong className="h5">
         {username}
-      </b>
+      </strong>
     </Button>
   </ListGroupItem>);
 
 class FriendList extends Component {
+  renderFriends() {
+    return (
+      <ListGroup className="h-100 mt-1">
+        {this.props.friends.map(friend =>
+          (<Friend
+            key={friend.username}
+            username={friend.username}
+            avatar={friend.avatar}
+            profileLink={friend.profileLink}
+          />)
+        )}
+      </ListGroup>
+    );
+  }
+
   render() {
     return (
       <Col sm={12} className="no-padding h-100">
-        <ListGroup className="h-100 mt-1">
-          {this.props.friends.map(friend =>
-            (<Friend
-              key={friend.username}
-              username={friend.username}
-              avatar={friend.avatar}
-              profileLink={friend.profileLink}
-            />)
-          )}
-        </ListGroup>
+        {this.props.friends.length === 0
+          ? <h3 className="lead">You have no followers or following yet</h3>
+          : this.renderFriends()}
       </Col>
     );
   }

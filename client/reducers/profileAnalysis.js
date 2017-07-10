@@ -17,13 +17,7 @@ const initialState = {
   isWaiting: false,
   user: null,
   languageUsageStats: null,
-  similarFriends: [
-    {
-      username: 'novicasarenac',
-      avatar: 'https://avatars0.githubusercontent.com/u/21954666?v=3',
-      profileLink: 'http://github.com/novicasarenac'
-    }
-  ]
+  similarFriends: null
 };
 
 const reducer = (state = initialState, action) => {
