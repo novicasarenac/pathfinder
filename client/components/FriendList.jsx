@@ -2,9 +2,16 @@ import React, { Component } from 'react';
 import { Button, ListGroup, ListGroupItem, Col, Image } from 'react-bootstrap';
 
 const Friend = ({ username, avatar, profileLink }) =>
-  (<ListGroupItem className="list-item">
-    <Image width="50" height="50" src={avatar} className="img-fluid rounded" />
-    <Button href={profileLink} target="tab">
+  (<ListGroupItem className="list-item justify-content-center">
+    <Image
+      width="50"
+      height="50"
+      src={avatar}
+      alt="Avatar"
+      className="img-fluid rounded"
+    />
+    <i className="fa fa-github fa-2x ml-3 mr-1" />
+    <Button href={profileLink} target="tab" className="no-padding">
       <b className="lead">
         {username}
       </b>
