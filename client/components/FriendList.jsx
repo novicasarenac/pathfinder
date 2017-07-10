@@ -9,7 +9,7 @@ import {
 } from 'react-bootstrap';
 
 const Friend = ({ username, avatar, profileLink }) =>
-  (<ListGroupItem className="list-item justify-content-center">
+  (<ListGroupItem className="list-item justify-content-left">
     <Image
       width="50"
       height="50"
