@@ -49,7 +49,7 @@ class GithubProfileForm extends Component {
 
   renderForm() {
     return (
-      <Jumbotron>
+      <Jumbotron className="vertical-center">
         <Button bsSize="small" bsStyle="link" onClick={this.props.handleBack}>
           <i className="fa fa-arrow-left" />
           &nbsp; Back to Main page
