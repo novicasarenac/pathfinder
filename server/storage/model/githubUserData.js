@@ -49,6 +49,36 @@ class GithubUserData { // eslint-disable-line
   getLanguagesStatistic() {
     return this.languagesStatistic;
   }
+
+  getNumberOfFriends() {
+    let numberOfFriends = this.following.length;
+    this.followers.forEach((follower) => {
+      if (!this.following.some(followingUser => follower.login === followingUser.login)) {
+        numberOfFriends++;
+      }
+    });
+    return numberOfFriends;
+  }
+
+  getSimilarityPercentage() {
+    return this.similarityPercentages;
+  }
+
+  getFriendByUsername(username) {
+    let retVal = {};
+    this.following.forEach((followingUser) => {
+      if (followingUser.login === username) {
+        retVal = followingUser;
+      }
+    });
+    this.followers.forEach((follower) => {
+      if (follower.login === username) {
+        retVal = follower;
+      }
+    });
+
+    return retVal;
+  }
 }
 
 export default GithubUserData;

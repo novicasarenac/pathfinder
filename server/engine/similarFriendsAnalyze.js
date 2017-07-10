@@ -2,6 +2,7 @@
 import GitHubApi from 'github';
 import dataStorage from '../storage/dataStorage';
 import cosineSimilarity from './cosineSimilarity';
+import notifications from '../services/notifications';
 
 const github = GitHubApi();
 github.authenticate({
@@ -35,6 +36,9 @@ function computeFriendStatistics(id, repoOwnerUsername) {
     dataStorage.addGithubUserSimilarityPercentage(id, repoOwnerUsername, similarity);
     console.log('similarity with ' + repoOwnerUsername + ': ' + similarity);
   }
+  if (dataStorage.getGithubUserNumberOfFriends(id) === Object.keys(dataStorage.getGithubUserSimilarityPercentage(id)).length) {
+    notifications.sendSimilarityWithFriends(id);
+  }
 }
 
 function addToFriendsStatistics(id, numberOfRepositories, repoOwnerUsername, languages) {
@@ -54,7 +58,11 @@ function addToFriendsStatistics(id, numberOfRepositories, repoOwnerUsername, lan
 
 function computeLanguageStatistics(id, numberOfRepositories, repository) {
   github.repos.getLanguages({ owner: repository.owner.login, repo: repository.name }, (err, res) => {
-    addToFriendsStatistics(id, numberOfRepositories, repository.owner.login, res.data);
+    if (err) {
+      console.log(err);
+    } else {
+      addToFriendsStatistics(id, numberOfRepositories, repository.owner.login, res.data);
+    }
   });
 }
 

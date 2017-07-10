@@ -47,6 +47,18 @@ function getGithubUserLanguagesStatistic(id) {
   return githubUserData[id].getLanguagesStatistic();
 }
 
+function getGithubUserNumberOfFriends(id) {
+  return githubUserData[id].getNumberOfFriends();
+}
+
+function getGithubUserSimilarityPercentage(id) {
+  return githubUserData[id].getSimilarityPercentage();
+}
+
+function getGithubUserFriendByUsername(id, username) {
+  return githubUserData[id].getFriendByUsername(username);
+}
+
 export default {
   addGithubUser,
   addGithubUserFollowers,
@@ -58,5 +70,8 @@ export default {
   getGithubUserRepositories,
   getGithubUserFollowers,
   getGithubUserFollowing,
-  getGithubUserLanguagesStatistic
+  getGithubUserLanguagesStatistic,
+  getGithubUserNumberOfFriends,
+  getGithubUserSimilarityPercentage,
+  getGithubUserFriendByUsername
 };
