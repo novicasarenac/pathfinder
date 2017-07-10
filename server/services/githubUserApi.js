@@ -11,7 +11,7 @@ github.authenticate({
 });
 
 function getGithubUserFollowers(message) {
-  github.users.getFollowersForUser({ username: message.username, per_page: 10 }, function getFollowers(err, res) { //eslint-disable-line
+  github.users.getFollowersForUser({ username: message.username, per_page: 50 }, function getFollowers(err, res) { //eslint-disable-line
     const followers = res.data;
     dataStorage.addGithubUserFollowers(message.id, followers);
     if (github.hasNextPage(res)) {
@@ -23,7 +23,7 @@ function getGithubUserFollowers(message) {
 }
 
 function getGithubUserFollowing(message) {
-  github.users.getFollowingForUser({ username: message.username, per_page: 10 }, function getFollowing(err, res) { //eslint-disable-line
+  github.users.getFollowingForUser({ username: message.username, per_page: 50 }, function getFollowing(err, res) { //eslint-disable-line
     const following = res.data;
     dataStorage.addGithubUserFollowing(message.id, following);
     if (github.hasNextPage(res)) {
@@ -35,7 +35,7 @@ function getGithubUserFollowing(message) {
 }
 
 function getGithubUserRepositories(message) {
-  github.repos.getForUser({ username: message.username, per_page: 15 }, function getRepos(err, res) {
+  github.repos.getForUser({ username: message.username, per_page: 50 }, function getRepos(err, res) {
     const repos = res.data;
     dataStorage.addGithubUserRepos(message.id, repos);
     if (github.hasNextPage(res)) {
