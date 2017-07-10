@@ -66,10 +66,16 @@ img[alt="avatar"] {
   border-radius: 10px;
 }
 
-.block {
+.block-75 {
   height: -webkit-calc(100% - 72px);
   height: -moz-calc(100% - 72px);
   height: calc(100% - 72px);
+}
+
+.block-40 {
+  height: -webkit-calc(100% - 40px);
+  height: -moz-calc(100% - 40px);
+  height: calc(100% - 40px);
 }
 
 .square {
@@ -100,4 +106,27 @@ img[alt="avatar"] {
 .interesting-people {
   background: #4078c0;
   color: white;
+}
+
+.list-item {
+  padding: 4px;
+  height: 20%;
+  background-color: #fafafa;
+  text-align: justify;
+}
+
+.list-item > img {
+  border: 1px solid gray;
+  margin-right: 10px;
+}
+
+.list-item > .btn:focus,
+.list-item > a:focus {
+  outline: 0 !important;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+}
+
+.no-padding {
+  padding: 0;
 }
