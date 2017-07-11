@@ -13,44 +13,50 @@ github.authenticate({
 });
 
 function getGithubUserFollowers(message) {
-  github.users.getFollowersForUser({ username: message.username, per_page: 50 }, function getFollowers(err, res) { //eslint-disable-line
-    const followers = res.data;
-    dataStorage.addGithubUserFollowers(message.id, followers);
+  return new Promise((resolve, reject) => {
+    github.users.getFollowersForUser({ username: message.username, per_page: 50 }, function getFollowers(err, res) { //eslint-disable-line
+      const followers = res.data;
+      dataStorage.addGithubUserFollowers(message.id, followers);
 
-    if (followers.length === 0 && dataStorage.getGithubUserFollowing(message.id).length === 0) {
-      if (dataStorage.getGithubUserEmptyFriendList(message.id)) {
-        notifications.sendSimilarityWithFriends(message.id);
-      } else {
-        dataStorage.setGithubUserEmptyFriendsList(message.id, true);
+      if (followers.length === 0 && dataStorage.getGithubUserFollowing(message.id).length === 0) {
+        if (dataStorage.getGithubUserEmptyFriendList(message.id)) {
+          notifications.sendSimilarityWithFriends(message.id);
+        } else {
+          dataStorage.setGithubUserEmptyFriendsList(message.id, true);
+        }
       }
-    }
 
-    if (github.hasNextPage(res)) {
-      github.getNextPage(res, getFollowers);
-    } else {
-      similarFriendsAnalyze.computeSimilarityWithFollowers(message.id);
-    }
+      if (github.hasNextPage(res)) {
+        github.getNextPage(res, getFollowers);
+      } else {
+        resolve();
+        similarFriendsAnalyze.computeSimilarityWithFollowers(message.id);
+      }
+    });
   });
 }
 
 function getGithubUserFollowing(message) {
-  github.users.getFollowingForUser({ username: message.username, per_page: 50 }, function getFollowing(err, res) { //eslint-disable-line
-    const following = res.data;
-    dataStorage.addGithubUserFollowing(message.id, following);
+  return new Promise((resolve, reject) => {
+    github.users.getFollowingForUser({ username: message.username, per_page: 50 }, function getFollowing(err, res) { //eslint-disable-line
+      const following = res.data;
+      dataStorage.addGithubUserFollowing(message.id, following);
 
-    if (following.length === 0 && dataStorage.getGithubUserFollowers(message.id).length === 0) {
-      if (dataStorage.getGithubUserEmptyFriendList(message.id)) {
-        notifications.sendSimilarityWithFriends(message.id);
-      } else {
-        dataStorage.setGithubUserEmptyFriendsList(message.id, true);
+      if (following.length === 0 && dataStorage.getGithubUserFollowers(message.id).length === 0) {
+        if (dataStorage.getGithubUserEmptyFriendList(message.id)) {
+          notifications.sendSimilarityWithFriends(message.id);
+        } else {
+          dataStorage.setGithubUserEmptyFriendsList(message.id, true);
+        }
       }
-    }
 
-    if (github.hasNextPage(res)) {
-      github.getNextPage(res, getFollowing);
-    } else {
-      similarFriendsAnalyze.computeSimilarityWithFollowing(message.id);
-    }
+      if (github.hasNextPage(res)) {
+        github.getNextPage(res, getFollowing);
+      } else {
+        resolve();
+        similarFriendsAnalyze.computeSimilarityWithFollowing(message.id);
+      }
+    });
   });
 }
 
@@ -68,11 +74,23 @@ function getGithubUserRepositories(message) {
     } else {
       Promise.all(githubUserLanguagesAnalyze.analyzeLanguages(message.id)).then((values) => {
         values.forEach((value) => {
-          githubUserLanguagesAnalyze.addToLanguageAnalyzeResult(value.id, value.repositoriesLength, value.data);
+          githubUserLanguagesAnalyze.addToLanguageAnalyzeResult(value.id, value.repositoriesLength, value.data); //eslint-disable-line
         });
-        getGithubUserFollowers(message);
-        getGithubUserFollowing(message);
-        interestingRepositoriesAnalyze.computeInterestingRepositories(message.id);
+        let resolved = false;
+        getGithubUserFollowers(message).then(() => {
+          if (resolved) {
+            //interestingRepositoriesAnalyze.computeInterestingRepositories(message.id);
+          } else {
+            resolved = true;
+          }
+        });
+        getGithubUserFollowing(message).then(() => {
+          if (resolved) {
+            //interestingRepositoriesAnalyze.computeInterestingRepositories(message.id);
+          } else {
+            resolved = true;
+          }
+        });
       });
     }
   });
