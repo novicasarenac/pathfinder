@@ -11,7 +11,7 @@ github.authenticate({
   secret: process.env.CLIENT_SECRET
 });
 
-const friendsInteresting = [];
+let interestingFriendsRepositories = [];
 
 function computeNormForRepositories(id, languagesToCompute, repos) {
   const promises = [];
@@ -24,12 +24,17 @@ function computeNormForRepositories(id, languagesToCompute, repos) {
         const repoLanguages = response.data;
         let norm = 0;
         norm = euclideanNorm.computeNorm(repoLanguages, languagesToCompute);
-        for (let i = 0; i < friendsInteresting.length; i++) {
-          if (friendsInteresting[i].norm < norm) {
-            friendsInteresting[i] = {
-              norm,
-              repo
-            };
+        for (let i = 0; i < interestingFriendsRepositories.length; i++) {
+          if (interestingFriendsRepositories[i].norm < norm) {
+            if (i === interestingFriendsRepositories.length - 1 || interestingFriendsRepositories[i + 1].norm > norm) {
+              for (let j = 0; j < i; j++) {
+                interestingFriendsRepositories[j] = interestingFriendsRepositories[j + 1];
+              }
+              interestingFriendsRepositories[i] = {
+                norm,
+                repo
+              };
+            }
           }
         }
         resolve();
@@ -73,15 +78,16 @@ function computeByFriends(id, number) {
   const followers = dataStorage.getGithubUserFollowers(id);
   const following = dataStorage.getGithubUserFollowing(id);
 
+  interestingFriendsRepositories = [];
   for (let i = 0; i < number; i++) {
-    friendsInteresting.push({
+    interestingFriendsRepositories.push({
       norm: 0,
       repo: {}
     });
   }
 
   Promise.all(computeNormForUsers(id, languagesToCompute, followers)).then(() => {
-    console.log(friendsInteresting);
+    console.log(interestingFriendsRepositories);
   });
 }
 
