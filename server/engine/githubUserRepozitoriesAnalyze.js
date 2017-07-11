@@ -32,7 +32,6 @@ function computeNormForRepositories(id, languagesToCompute, repos) {
             };
           }
         }
-        //dataStorage.addToGithubUserInterestingFriendsRepositories(id, repo.name, norm);
         resolve();
       });
     }));
@@ -67,7 +66,7 @@ function computeByFriends(id, number) {
   const languages = dataStorage.getGithubUserLanguagesStatistic(id);
   const sorted = Object.keys(languages).sort((a, b) => languages[b] - languages[a]);
   const languagesToCompute = {};
-  for (let i = 0; i < (sorted.length > 5 ? 5 : sorted.length); i++) {
+  for (let i = 0; i < (sorted.length > 3 ? 3 : sorted.length); i++) {
     languagesToCompute[sorted[i]] = languages[sorted[i]];
   }
 
@@ -82,7 +81,6 @@ function computeByFriends(id, number) {
   }
 
   Promise.all(computeNormForUsers(id, languagesToCompute, followers)).then(() => {
-    //console.log(dataStorage.getGithubUserInterestingFriendsRepositories(id));
     console.log(friendsInteresting);
   });
 }
