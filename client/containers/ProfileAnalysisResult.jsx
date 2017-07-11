@@ -11,8 +11,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  redirectToProfileForm: () =>
-    dispatch(actions.redirect('github-profile-analysis')),
+  redirectToProfileForm: () => dispatch(actions.redirect('/analysis-request')),
 
   redirectToMainPage: () => dispatch(actions.redirect('/'))
 });
