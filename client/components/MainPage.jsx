@@ -17,7 +17,7 @@ class MainPage extends Component {
               onClick={this.props.handleFindPathClick}
             >
               <i className="fa fa-search" />
-              Find Your Path
+              Get Started
             </Button>
 
             <b className="mr-3 ml-3">or</b>
@@ -28,7 +28,7 @@ class MainPage extends Component {
               onClick={this.props.handleGithubProfileClick}
             >
               <i className="fa fa-github" />
-              Sign In With Github
+              Analyse Profile
             </Button>
           </Jumbotron>
         </Col>

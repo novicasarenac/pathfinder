@@ -4,8 +4,8 @@ import actions from '../actions';
 
 const mapDispatchToProps = dispatch => ({
   handleGithubProfileClick: () =>
-    dispatch(actions.redirect('/github-profile-analysis')),
-  handleFindPathClick: () => dispatch(actions.redirect('/development-path'))
+    dispatch(actions.redirect('/analysis-request')),
+  handleFindPathClick: () => dispatch(actions.redirect('/explore'))
 });
 
 export default connect(null, mapDispatchToProps)(MainPage);

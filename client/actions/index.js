@@ -27,7 +27,18 @@ export default {
         .then((response) => {
           dispatch({ type: 'RESET' });
           dispatch({ type: 'USER_RESPONSE_RECEIVED', user: response.data });
-          dispatch(push('/analysis'));
+          dispatch(push('/analysis-result'));
         });
+  },
+
+  exploreGithub(areas) {
+    return dispatch =>
+      api.exploreGithub(areas).catch(() => {
+        dispatch({ type: 'EXPLORE_ERROR_RESPONSE' });
+
+        throw new SubmissionError({
+          _error: "Can't connect to Github right now. Try again later."
+        });
+      });
   }
 };
