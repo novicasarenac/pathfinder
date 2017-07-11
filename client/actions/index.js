@@ -33,13 +33,12 @@ export default {
 
   exploreGithub(areas) {
     return dispatch =>
-      api
-        .exploreGithub(areas)
-        .catch(() => {
-          throw new SubmissionError({
-            _error: "Can't connect to Github right now. Try again later."
-          });
-        })
-        .then(() => dispatch(push('/explore-results')));
+      api.exploreGithub(areas).catch(() => {
+        dispatch({ type: 'EXPLORE_ERROR_RESPONSE' });
+
+        throw new SubmissionError({
+          _error: "Can't connect to Github right now. Try again later."
+        });
+      });
   }
 };
