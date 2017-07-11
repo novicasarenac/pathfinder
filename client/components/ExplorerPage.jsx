@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Row, Form, Checkbox, Col, Button, Jumbotron } from 'react-bootstrap';
 import { reduxForm, Field } from 'redux-form';
+import Spinner from './Spinner';
 
 const PROGRAMMING_AREAS = [
   'Virtual Reality',
@@ -77,7 +78,7 @@ class ExplorerPage extends Component {
           <hr />
 
           <Col lg={10} lgOffset={1} className="container mt-5">
-            {this.renderForm()}
+            {this.props.isWaiting ? <Spinner /> : this.renderForm()}
           </Col>
         </Jumbotron>
       </Col>

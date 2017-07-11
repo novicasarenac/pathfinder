@@ -1,7 +1,6 @@
 /* eslint no-nested-ternary: "off" */
 
 import React, { Component } from 'react';
-import { BounceLoader } from 'react-spinners';
 import {
   Col,
   Jumbotron,
@@ -12,6 +11,7 @@ import {
   InputGroup
 } from 'react-bootstrap';
 import { reduxForm, Field } from 'redux-form';
+import Spinner from './Spinner';
 
 const renderInput = ({ input, placeholder, type, meta: { touched, error } }) =>
   (<div>
@@ -35,12 +35,6 @@ const renderInput = ({ input, placeholder, type, meta: { touched, error } }) =>
       <p className="text-center text-danger mt-3 mb-3 form-text text-muted">
         {error}
       </p>}
-  </div>);
-
-const Spinner = () =>
-  (<div className="mt-5 mb-5 d-flex justify-content-center">
-    <span className="mt-3">&nbsp;</span>
-    <BounceLoader size={80} color="green" />
   </div>);
 
 class GithubProfileForm extends Component {
