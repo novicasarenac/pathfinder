@@ -2,6 +2,7 @@ import GitHubApi from 'github';
 import dataStorage from '../storage/dataStorage';
 import githubUserLanguagesAnalyze from '../engine/githubUserLanguagesAnalyze';
 import similarFriendsAnalyze from '../engine/similarFriendsAnalyze';
+import notifications from '../services/notifications';
 
 const github = GitHubApi();
 github.authenticate({
@@ -14,6 +15,15 @@ function getGithubUserFollowers(message) {
   github.users.getFollowersForUser({ username: message.username, per_page: 50 }, function getFollowers(err, res) { //eslint-disable-line
     const followers = res.data;
     dataStorage.addGithubUserFollowers(message.id, followers);
+
+    if (followers.length === 0 && dataStorage.getGithubUserFollowing(message.id).length === 0) {
+      if (dataStorage.getGithubUserEmptyFriendList(message.id)) {
+        notifications.sendSimilarityWithFriends(message.id);
+      } else {
+        dataStorage.setGithubUserEmptyFriendsList(message.id, true);
+      }
+    }
+
     if (github.hasNextPage(res)) {
       github.getNextPage(res, getFollowers);
     } else {
@@ -26,6 +36,15 @@ function getGithubUserFollowing(message) {
   github.users.getFollowingForUser({ username: message.username, per_page: 50 }, function getFollowing(err, res) { //eslint-disable-line
     const following = res.data;
     dataStorage.addGithubUserFollowing(message.id, following);
+
+    if (following.length === 0 && dataStorage.getGithubUserFollowers(message.id).length === 0) {
+      if (dataStorage.getGithubUserEmptyFriendList(message.id)) {
+        notifications.sendSimilarityWithFriends(message.id);
+      } else {
+        dataStorage.setGithubUserEmptyFriendsList(message.id, true);
+      }
+    }
+
     if (github.hasNextPage(res)) {
       github.getNextPage(res, getFollowing);
     } else {

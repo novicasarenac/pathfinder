@@ -7,6 +7,10 @@ function addGithubUser(id) {
   console.log(id);
 }
 
+function setGithubUserEmptyFriendsList(id, value) {
+  githubUserData[id].setEmptyFriendList(value);
+}
+
 function addGithubUserFollowers(id, newFollowers) {
   githubUserData[id].addFollowers(newFollowers);
 }
@@ -59,7 +63,12 @@ function getGithubUserFriendByUsername(id, username) {
   return githubUserData[id].getFriendByUsername(username);
 }
 
+function getGithubUserEmptyFriendList(id) {
+  return githubUserData[id].getEmptyFriendList();
+}
+
 export default {
+  setGithubUserEmptyFriendsList,
   addGithubUser,
   addGithubUserFollowers,
   addGithubUserFollowing,
@@ -73,5 +82,6 @@ export default {
   getGithubUserLanguagesStatistic,
   getGithubUserNumberOfFriends,
   getGithubUserSimilarityPercentage,
-  getGithubUserFriendByUsername
+  getGithubUserFriendByUsername,
+  getGithubUserEmptyFriendList
 };

@@ -51,7 +51,7 @@ function addToFriendsStatistics(id, numberOfRepositories, repoOwnerUsername, lan
   });
 
   friendsStatistics[id][repoOwnerUsername].analyzedNumber += 1;
-  if (numberOfRepositories === friendsStatistics[id][repoOwnerUsername].analyzedNumber && Object.keys(languages).length !== 0) {
+  if (numberOfRepositories === friendsStatistics[id][repoOwnerUsername].analyzedNumber) {
     computeFriendStatistics(id, repoOwnerUsername);
   }
 }
@@ -87,14 +87,12 @@ function computeSimilarityWithFollowers(id) {
     friendsStatistics[id] = {};
   }
   dataStorage.getGithubUserFollowers(id).forEach((follower) => {
-    if (!friendsStatistics[id].hasOwnProperty(follower.login)) {
-      friendsStatistics[id][follower.login] = {
-        analyzedNumber: 0,
-        result: {}
-      };
+    friendsStatistics[id][follower.login] = {
+      analyzedNumber: 0,
+      result: {}
+    };
 
-      computeRepositoriesStatistics(id, follower.login);
-    }
+    computeRepositoriesStatistics(id, follower.login);
   });
 }
 
@@ -103,14 +101,12 @@ function computeSimilarityWithFollowing(id) {
     friendsStatistics[id] = {};
   }
   dataStorage.getGithubUserFollowing(id).forEach((following) => {
-    if (!friendsStatistics[id].hasOwnProperty(following.login)) {
-      friendsStatistics[id][following.login] = {
-        analyzedNumber: 0,
-        result: {}
-      };
+    friendsStatistics[id][following.login] = {
+      analyzedNumber: 0,
+      result: {}
+    };
 
-      computeRepositoriesStatistics(id, following.login);
-    }
+    computeRepositoriesStatistics(id, following.login);
   });
 }
 

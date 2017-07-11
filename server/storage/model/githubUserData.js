@@ -5,6 +5,11 @@ class GithubUserData { // eslint-disable-line
     this.repositories = [];
     this.languagesStatistic = {};
     this.similarityPercentages = [];
+    this.emptyFriendList = false;
+  }
+
+  setEmptyFriendList(value) {
+    this.emptyFriendList = value;
   }
 
   addFollowers(newFollowers) {
@@ -78,6 +83,10 @@ class GithubUserData { // eslint-disable-line
     });
 
     return retVal;
+  }
+
+  getEmptyFriendList() {
+    return this.emptyFriendList;
   }
 }
 
