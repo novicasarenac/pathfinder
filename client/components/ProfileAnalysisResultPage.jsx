@@ -26,7 +26,12 @@ class ProfileAnalysisResultPage extends Component {
   }
 
   render() {
-    const { user, languageUsageStats, similarFriends } = this.props;
+    const {
+      user,
+      languageUsageStats,
+      similarFriends,
+      interestingPeople
+    } = this.props;
 
     if (!user) return null;
 
@@ -40,6 +45,7 @@ class ProfileAnalysisResultPage extends Component {
           <AnalysisResults
             languageStats={languageUsageStats}
             similarFriends={similarFriends}
+            interestingPeople={interestingPeople}
           />
         </Row>
       </Col>

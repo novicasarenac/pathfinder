@@ -28,6 +28,9 @@ class AnalysisResults extends Component {
   }
 
   renderSimilarFriends() {
+    const errorMessage =
+      'Looks like you have no followers and you are not following anybody yet.';
+
     return (
       <Col className="square container">
         <Row className="similar-friends justify-content-center">
@@ -35,7 +38,10 @@ class AnalysisResults extends Component {
         </Row>
         <Row className="justify-content-center block-40">
           {this.props.similarFriends
-            ? <FriendList friends={this.props.similarFriends} />
+            ? <FriendList
+              friends={this.props.similarFriends}
+              errorMessage={errorMessage}
+            />
             : <Spinner color="#4078c0" />}
         </Row>
       </Col>
@@ -58,6 +64,9 @@ class AnalysisResults extends Component {
   }
 
   renderInterestingPeople() {
+    const errorMessage =
+      "We can't find any interesting people for you, right now.";
+
     return (
       <Col className="square container">
         <Row className="interesting-people justify-content-center">
@@ -65,7 +74,10 @@ class AnalysisResults extends Component {
         </Row>
         <Row className="justify-content-center">
           {this.props.interestingPeople
-            ? <LanguageUsageChart data={this.props.interestingPeople} />
+            ? <FriendList
+              friends={this.props.interestingPeople}
+              errorMessage={errorMessage}
+            />
             : <Spinner color="#6cc644" />}
         </Row>
       </Col>

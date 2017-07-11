@@ -39,7 +39,7 @@ class LanguageUsageChart extends Component {
     }));
   }
 
-  render() {
+  renderPieChart() {
     return (
       <PieChart width={360} height={330} onMouseEnter={this.onPieEnter}>
         <Pie
@@ -63,6 +63,14 @@ class LanguageUsageChart extends Component {
         <Legend iconType="circle" />
       </PieChart>
     );
+  }
+
+  render() {
+    return this.languageStats().length === 0
+      ? <h1 className="lead text-center vertical-center">
+          You don&#39;t have any code yet.
+      </h1>
+      : this.renderPieChart();
   }
 }
 
