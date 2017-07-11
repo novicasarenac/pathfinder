@@ -11,21 +11,36 @@ github.authenticate({
   secret: process.env.CLIENT_SECRET
 });
 
-const bestByFriends = [];
+const friendsInteresting = [];
 
-function getLanguages(username, repoName) {
-  return new Promise((resolve, reject) => {
-    github.repos.getLanguages({ owner: username, repo: repoName }, (error, response) => {
-      if (error) {
-        reject();
-      } else {
-        resolve({ languages: response.data });
-      }
-    });
+function computeNormForRepositories(id, languagesToCompute, repos) {
+  const promises = [];
+  repos.forEach((repo) => {
+    promises.push(new Promise((resolve, reject) => {
+      github.repos.getLanguages({ owner: repo.owner.login, repo: repo.name }, (error, response) => {
+        if (error) {
+          reject();
+        }
+        const repoLanguages = response.data;
+        let norm = 0;
+        norm = euclideanNorm.computeNorm(repoLanguages, languagesToCompute);
+        for (let i = 0; i < friendsInteresting.length; i++) {
+          if (friendsInteresting[i].norm < norm) {
+            friendsInteresting[i] = {
+              norm,
+              repo
+            };
+          }
+        }
+        //dataStorage.addToGithubUserInterestingFriendsRepositories(id, repo.name, norm);
+        resolve();
+      });
+    }));
   });
+  return promises;
 }
 
-function computeNormForRepositories(languagesToCompute, friends) {
+function computeNormForUsers(id, languagesToCompute, friends) {
   const promises = [];
   friends.forEach((follower) => {
     promises.push(new Promise((resolve, reject) => {
@@ -34,22 +49,7 @@ function computeNormForRepositories(languagesToCompute, friends) {
           reject();
         }
         const repos = res.data;
-
-        repos.forEach((repo) => {
-          getLanguages(repo.owner.login, repo.name).then((response) => {
-            const repoLanguages = response.languages;
-            let norm = 0;
-            norm = euclideanNorm.computeNorm(repoLanguages, languagesToCompute);
-            for (let i = 0; i < bestByFriends.length; i++) {
-              if (bestByFriends[i].norm < norm) {
-                bestByFriends[i] = {
-                  norm,
-                  repo
-                };
-              }
-            }
-          });
-
+        Promise.all(computeNormForRepositories(id, languagesToCompute, repos)).then(() => {
           if (github.hasNextPage(res)) {
             github.getNextPage(res, getRepos);
           } else {
@@ -74,16 +74,16 @@ function computeByFriends(id, number) {
   const followers = dataStorage.getGithubUserFollowers(id);
   const following = dataStorage.getGithubUserFollowing(id);
 
-  bestByFriends[id] = {};
   for (let i = 0; i < number; i++) {
-    bestByFriends[i] = {
+    friendsInteresting.push({
       norm: 0,
       repo: {}
-    };
+    });
   }
 
-  Promise.all(computeNormForRepositories(languagesToCompute, followers)).then(() => {
-    console.log(bestByFriends);
+  Promise.all(computeNormForUsers(id, languagesToCompute, followers)).then(() => {
+    //console.log(dataStorage.getGithubUserInterestingFriendsRepositories(id));
+    console.log(friendsInteresting);
   });
 }
 
@@ -115,7 +115,7 @@ function computeRandom(id, number) {
       order: 'desc',
       page: i + 1,
       per_page: 10 }, (err, res) => {
-      const random = Math.floor(Math.random() * (res.data.items.length-1));
+      const random = Math.floor(Math.random() * (res.data.items.length - 1));
       dataStorage.addGithubUserInterestingRepositories(id, [res.data.items[random]]);
       if (dataStorage.getGithubUserInterestingRepositories(id).length === 10) {
         notifications.sendInterestingRepositories(id);
