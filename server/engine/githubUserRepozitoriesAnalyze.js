@@ -9,11 +9,50 @@ github.authenticate({
   secret: process.env.CLIENT_SECRET
 });
 
-function computeByStars(id, n) {
+const bestByFriends = [];
+
+function computeByFriends(id, number) {
+  const languages = dataStorage.getGithubUserLanguagesStatistic(id);
+  const sorted = Object.keys(languages).sort((a, b) => languages[b] - languages[a]);
+  const followers = dataStorage.getGithubUserFollowers(id);
+  const following = dataStorage.getGithubUserFollowing(id);
+
+  bestByFriends[id] = {};
+  for(let i = 0; i < number; i++) {
+    bestByFriends[i] = {
+      norm: 0,
+      repo: {}
+    };
+  }
+
+  followers.forEach((follower) => {
+    github.repos.getForUser({username: follower.login, per_page: 50 },(err, res) => {
+      const repos = res.data;
+
+      repos.forEach((repo) => {
+        github.repos.getLanguages({ owner: repo.owner.login, repo: repo.name }, (err, res) => {
+          const repoLanguages = res.data;
+          const norm = 0; //TODO euclidean norm
+          for (let i = 0; i < bestByFriends.length; i++) {
+            if (bestByFriends[i].norm < norm) {
+              bestByFriends[i] = {
+                norm,
+                repo
+              };
+            }
+          }
+        })
+      });
+    });
+  })
+
+}
+
+function computeByStars(id, number) {
   const languages = dataStorage.getGithubUserLanguagesStatistic(id);
   const sorted = Object.keys(languages).sort((a, b) => languages[b] - languages[a]);
 
-  for (let i = 0; i < n; i++) {
+  for (let i = 0; i < number; i++) {
     github.search.repos({
       q: 'language:'+sorted[i],
       sort: 'stars',
@@ -29,8 +68,8 @@ function computeByStars(id, n) {
   }
 }
 
-function computeRandom(id, n) {
-  for (let i = 0; i < n; i++) {
+function computeRandom(id, number) {
+  for (let i = 0; i < number; i++) {
     github.search.repos({
       q: 'size:>1',
       sort: 'stars',
