@@ -39,8 +39,7 @@ class FriendList extends Component {
       <Col sm={12} className="no-padding h-100">
         {this.props.friends.length === 0
           ? <h1 className="text-center lead vertical-center">
-              Looks like you have no followers and you are not following anybody
-              yet.
+            {this.props.errorMessage}
           </h1>
           : this.renderFriends()}
       </Col>

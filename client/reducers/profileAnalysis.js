@@ -17,7 +17,8 @@ const initialState = {
   isWaiting: false,
   user: null,
   languageUsageStats: null,
-  similarFriends: null
+  similarFriends: null,
+  interestingPeople: null
 };
 
 const reducer = (state = initialState, action) => {
