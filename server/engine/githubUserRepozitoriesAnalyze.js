@@ -1,5 +1,6 @@
 import GitHubApi from 'github';
 import dataStorage from '../storage/dataStorage';
+import notifications from '../services/notifications';
 
 const github = GitHubApi();
 github.authenticate({
@@ -19,18 +20,35 @@ function computeByStars(id, n) {
       order: 'desc',
       page: 1,
       per_page: 10 }, (err, res) => {
-        const random = Math.floor(Math.random() * (res.data.items.length-1));
-        dataStorage.addGithubUserInterestingRepositories(id, [res.data.items[random], random < res.data.items.length-2 ? res.data.items[random+1] : res.data.items[random-1]]);
+      const random = Math.floor(Math.random() * (res.data.items.length-1));
+      dataStorage.addGithubUserInterestingRepositories(id, [res.data.items[random], random < res.data.items.length-2 ? res.data.items[random+1] : res.data.items[random-1]]);
+      if (dataStorage.getGithubUserInterestingRepositories(id).length === 10) {
+        notifications.sendInterestingRepositories(id);
+      }
     });
+  }
+}
 
-    if(dataStorage.getGithubUserInterestingRepositories(id).length === 10) {
-      //TODO notify
-    }
+function computeRandom(id, n) {
+  for (let i = 0; i < n; i++) {
+    github.search.repos({
+      q: 'size:>1',
+      sort: 'stars',
+      order: 'desc',
+      page: i+1,
+      per_page: 10 }, (err, res) => {
+      const random = Math.floor(Math.random() * (res.data.items.length-1));
+      dataStorage.addGithubUserInterestingRepositories(id, [res.data.items[random]]);
+      if (dataStorage.getGithubUserInterestingRepositories(id).length === 10) {
+        notifications.sendInterestingRepositories(id);
+      }
+    });
   }
 }
 
 function computeInterestingRepositories(id) {
   computeByStars(id, 3);
+  computeRandom(id, 4);
 }
 
 export default { computeInterestingRepositories };
