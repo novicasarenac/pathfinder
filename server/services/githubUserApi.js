@@ -79,14 +79,14 @@ function getGithubUserRepositories(message) {
         let resolved = false;
         getGithubUserFollowers(message).then(() => {
           if (resolved) {
-            //interestingRepositoriesAnalyze.computeInterestingRepositories(message.id);
+            interestingRepositoriesAnalyze.computeInterestingRepositories(message.id);
           } else {
             resolved = true;
           }
         });
         getGithubUserFollowing(message).then(() => {
           if (resolved) {
-            //interestingRepositoriesAnalyze.computeInterestingRepositories(message.id);
+            interestingRepositoriesAnalyze.computeInterestingRepositories(message.id);
           } else {
             resolved = true;
           }
