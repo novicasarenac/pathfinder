@@ -1,6 +1,7 @@
 import GitHubApi from 'github';
 import dataStorage from '../storage/dataStorage';
 import notifications from '../services/notifications';
+import euclideanNorm from '../engine/euclideanNorm';
 
 const github = GitHubApi();
 github.authenticate({
@@ -14,11 +15,15 @@ const bestByFriends = [];
 function computeByFriends(id, number) {
   const languages = dataStorage.getGithubUserLanguagesStatistic(id);
   const sorted = Object.keys(languages).sort((a, b) => languages[b] - languages[a]);
+  const languagesToCompute = [];
+  for (let i = 0; i < (sorted.length > 5 ? 5 : sorted.length); i++) {
+    languagesToCompute.push(languages[sorted[i]]);
+  }
   const followers = dataStorage.getGithubUserFollowers(id);
   const following = dataStorage.getGithubUserFollowing(id);
 
   bestByFriends[id] = {};
-  for(let i = 0; i < number; i++) {
+  for (let i = 0; i < number; i++) {
     bestByFriends[i] = {
       norm: 0,
       repo: {}
@@ -30,9 +35,13 @@ function computeByFriends(id, number) {
       const repos = res.data;
 
       repos.forEach((repo) => {
+        console.log(repo.name);
         github.repos.getLanguages({ owner: repo.owner.login, repo: repo.name }, (err, res) => {
           const repoLanguages = res.data;
-          const norm = 0; //TODO euclidean norm
+          let norm = 0;
+          if (languages.length > 0) {
+            norm = euclideanNorm.computeNorm(repoLanguages, languagesToCompute);
+          }
           for (let i = 0; i < bestByFriends.length; i++) {
             if (bestByFriends[i].norm < norm) {
               bestByFriends[i] = {
@@ -44,8 +53,8 @@ function computeByFriends(id, number) {
         })
       });
     });
-  })
-
+  });
+  console.log(bestByFriends);
 }
 
 function computeByStars(id, number) {
@@ -87,7 +96,8 @@ function computeRandom(id, number) {
 
 function computeInterestingRepositories(id) {
   computeByStars(id, 3);
-  computeRandom(id, 4);
+  computeRandom(id, 2);
+  computeByFriends(id, 2);
 }
 
 export default { computeInterestingRepositories };

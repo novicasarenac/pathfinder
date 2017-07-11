@@ -72,7 +72,7 @@ function getGithubUserRepositories(message) {
         });
         getGithubUserFollowers(message);
         getGithubUserFollowing(message);
-        //interestingRepositoriesAnalyze.computeInterestingRepositories(message.id);
+        interestingRepositoriesAnalyze.computeInterestingRepositories(message.id);
       });
     }
   });
