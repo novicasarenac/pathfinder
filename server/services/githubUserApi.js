@@ -2,6 +2,7 @@ import GitHubApi from 'github';
 import dataStorage from '../storage/dataStorage';
 import githubUserLanguagesAnalyze from '../engine/githubUserLanguagesAnalyze';
 import similarFriendsAnalyze from '../engine/similarFriendsAnalyze';
+import interestingRepositoriesAnalyze from '../engine/githubUserRepozitoriesAnalyze';
 import notifications from '../services/notifications';
 
 const github = GitHubApi();
@@ -71,6 +72,7 @@ function getGithubUserRepositories(message) {
         });
         getGithubUserFollowers(message);
         getGithubUserFollowing(message);
+        interestingRepositoriesAnalyze.computeInterestingRepositories(message.id);
       });
     }
   });
