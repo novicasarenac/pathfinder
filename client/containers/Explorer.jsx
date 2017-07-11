@@ -4,7 +4,7 @@ import actions from '../actions';
 
 const mapDispatchToProps = dispatch => ({
   handleBack: () => dispatch(actions.redirect('/')),
-  onSubmit: values => console.log(values)
+  onSubmit: areas => dispatch(actions.exploreGithub(areas))
 });
 
 export default connect(null, mapDispatchToProps)(ExplorerPage);

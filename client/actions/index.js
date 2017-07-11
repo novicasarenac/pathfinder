@@ -29,5 +29,17 @@ export default {
           dispatch({ type: 'USER_RESPONSE_RECEIVED', user: response.data });
           dispatch(push('/analysis-result'));
         });
+  },
+
+  exploreGithub(areas) {
+    return dispatch =>
+      api
+        .exploreGithub(areas)
+        .catch(() => {
+          throw new SubmissionError({
+            _error: "Can't connect to Github right now. Try again later."
+          });
+        })
+        .then(() => dispatch(push('/explore-results')));
   }
 };

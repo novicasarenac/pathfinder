@@ -35,12 +35,18 @@ class ExplorerPage extends Component {
     const mid = Math.ceil(rightHalf.length / 2);
     const leftHalf = rightHalf.splice(0, mid);
 
+    const { error } = this.props;
+
     return (
       <Form onSubmit={this.props.handleSubmit}>
         <Row className="container-fluid">
           <Column areas={leftHalf} />
           <Column areas={rightHalf} />
         </Row>
+        {error &&
+          <p className="text-center text-danger mt-3 mb-3 form-text text-muted">
+            {error}
+          </p>}
         <div className="text-center mt-5">
           <Button
             type="submit"
