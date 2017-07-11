@@ -6,10 +6,15 @@ class GithubUserData { // eslint-disable-line
     this.languagesStatistic = {};
     this.similarityPercentages = [];
     this.emptyFriendList = false;
+    this.interestingRepositories = [];
   }
 
   setEmptyFriendList(value) {
     this.emptyFriendList = value;
+  }
+
+  addToInterestingRepositories(newRepositories) {
+    this.interestingRepositories = this.interestingRepositories.concat(newRepositories);
   }
 
   addFollowers(newFollowers) {
@@ -87,6 +92,10 @@ class GithubUserData { // eslint-disable-line
 
   getEmptyFriendList() {
     return this.emptyFriendList;
+  }
+
+  getInterestingRepositories() {
+    return this.interestingRepositories;
   }
 }
 

@@ -8,7 +8,7 @@ github.authenticate({
   secret: process.env.CLIENT_SECRET
 });
 
-function computeByStars(id) {
+function computeByStars(id, n) {
   const languages = dataStorage.getGithubUserLanguagesStatistic(id);
   const sorted = Object.keys(languages).sort((a, b) => languages[b] - languages[a]);
 
@@ -19,7 +19,8 @@ function computeByStars(id) {
       order: 'desc',
       page: 1,
       per_page: 10 }, (err, res) => {
-        console.log('l');
+        const random = Math.floor(Math.random() * (res.data.length-1));
+        dataStorage.addGithubUserInterestingRepositories(id, [res.data[random], random < 8])
     });
   }
 }
