@@ -37,12 +37,22 @@ const renderInput = ({ input, placeholder, type, meta: { touched, error } }) =>
       </p>}
   </div>);
 
+const Spinner = () =>
+  (<div className="mt-5 mb-5 d-flex justify-content-center">
+    <span className="mt-3">&nbsp;</span>
+    <BounceLoader size={80} color="green" />
+  </div>);
+
 class GithubProfileForm extends Component {
-  renderSpinner() {
+  renderButtons() {
     return (
-      <div className="mt-5 mb-5 d-flex justify-content-center">
-        <span className="mt-3">&nbsp;</span>
-        <BounceLoader size={80} color="green" />
+      <div className="mt-5">
+        <Button type="submit" bsStyle="success" disabled={this.props.pristine}>
+          Analyse Profile
+        </Button>
+        <Button bsSize="small" bsStyle="link" onClick={this.props.handleBack}>
+          &nbsp; Back to Main page
+        </Button>
       </div>
     );
   }
@@ -50,14 +60,11 @@ class GithubProfileForm extends Component {
   renderForm() {
     return (
       <Jumbotron className="vertical-center">
-        <Button bsSize="small" bsStyle="link" onClick={this.props.handleBack}>
-          <i className="fa fa-arrow-left" />
-          &nbsp; Back to Main page
-        </Button>
-
-        <p className="lead text-center mt-3">
-          Please, enter <strong>Github</strong> username to start analysis. You
-          will get usefull information such as given user&#39;s similiar
+        <p className="text-center lead display-4 mt-3">
+          Enter <strong>Github</strong> username to start analysis
+        </p>
+        <p className="lead text-center mt-3 text-primary">
+          You will get usefull information such as given user&#39;s similiar
           followers, language usage stats, recommended open source repos etc.
         </p>
         <hr className="my-4" />
@@ -72,16 +79,7 @@ class GithubProfileForm extends Component {
             />
 
             <div className="text-center">
-              {this.props.isWaiting
-                ? this.renderSpinner()
-                : <Button
-                  className="mt-3"
-                  type="submit"
-                  bsStyle="success"
-                  disabled={this.props.pristine}
-                >
-                    Analyse Profile
-                </Button>}
+              {this.props.isWaiting ? <Spinner /> : this.renderButtons()}
             </div>
           </Form>
         </Col>
