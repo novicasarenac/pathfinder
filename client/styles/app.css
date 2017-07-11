@@ -111,7 +111,7 @@ img[alt="avatar"] {
 }
 
 .list-item {
-  padding-top: 4px;
+  padding-top: 0px;
   padding-left: 4px;
   padding-right: 4px;
   padding-bottom: 0px;
@@ -143,6 +143,6 @@ img[alt="avatar"] {
   margin-top: 25%;
 }
 
-.repo-name {
+.medium-font {
   font-size: medium;
 }
