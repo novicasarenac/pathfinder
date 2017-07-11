@@ -57,6 +57,11 @@ function getGithubUserRepositories(message) {
   github.repos.getForUser({ username: message.username, per_page: 50 }, function getRepos(err, res) {
     const repos = res.data;
     dataStorage.addGithubUserRepos(message.id, repos);
+
+    if (repos.length === 0) {
+      notifications.sendLanguagesStatistics(message.id, {});
+    }
+
     if (github.hasNextPage(res)) {
       github.getNextPage(res, getRepos);
     } else {
