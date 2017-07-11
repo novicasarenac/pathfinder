@@ -3,6 +3,7 @@ import { Col, Row } from 'react-bootstrap';
 import { BounceLoader } from 'react-spinners';
 import LanguageUsageChart from './LanguageUsageChart';
 import FriendList from './FriendList';
+import RepositoryList from './RepositoryList';
 
 const Spinner = ({ color }) =>
   (<div className="justify-content-center mt-5">
@@ -54,9 +55,9 @@ class AnalysisResults extends Component {
         <Row className="recommended-repos justify-content-center">
           <h4 className="mt-1 text-center">Recommended Projects</h4>
         </Row>
-        <Row className="justify-content-center">
+        <Row className="justify-content-center block-40">
           {this.props.recommendedRepos
-            ? <LanguageUsageChart data={this.props.recommendedRepos} />
+            ? <RepositoryList repositories={this.props.recommendedRepos} />
             : <Spinner color="#bd2c00" />}
         </Row>
       </Col>

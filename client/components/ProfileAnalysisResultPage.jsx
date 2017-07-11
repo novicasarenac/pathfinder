@@ -30,7 +30,8 @@ class ProfileAnalysisResultPage extends Component {
       user,
       languageUsageStats,
       similarFriends,
-      interestingPeople
+      interestingPeople,
+      recommendedRepos
     } = this.props;
 
     if (!user) return null;
@@ -46,6 +47,7 @@ class ProfileAnalysisResultPage extends Component {
             languageStats={languageUsageStats}
             similarFriends={similarFriends}
             interestingPeople={interestingPeople}
+            recommendedRepos={recommendedRepos}
           />
         </Row>
       </Col>

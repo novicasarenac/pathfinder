@@ -18,7 +18,8 @@ const initialState = {
   user: null,
   languageUsageStats: null,
   similarFriends: null,
-  interestingPeople: null
+  interestingPeople: null,
+  recommendedRepos: null
 };
 
 const reducer = (state = initialState, action) => {
@@ -46,6 +47,12 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         similarFriends: action.friends
+      };
+
+    case 'RECOMMENDED_REPOS':
+      return {
+        ...state,
+        recommendedRepos: action.repos
       };
 
     case 'RESET':

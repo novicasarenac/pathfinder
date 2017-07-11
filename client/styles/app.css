@@ -111,7 +111,10 @@ img[alt="avatar"] {
 }
 
 .list-item {
-  padding: 4px;
+  padding-top: 0px;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-bottom: 0px;
   height: 20%;
   background-color: #fafafa;
   text-align: justify;
@@ -122,8 +125,7 @@ img[alt="avatar"] {
   margin-right: 10px;
 }
 
-.list-item > .btn:focus,
-.list-item > a:focus {
+.no-outline:focus {
   outline: 0 !important;
   box-shadow: none !important;
   -webkit-box-shadow: none !important;
@@ -133,6 +135,14 @@ img[alt="avatar"] {
   padding: 0;
 }
 
+.octicon-margin {
+  margin-top: 5px;
+}
+
 .vertical-center {
   margin-top: 25%;
+}
+
+.medium-font {
+  font-size: medium;
 }

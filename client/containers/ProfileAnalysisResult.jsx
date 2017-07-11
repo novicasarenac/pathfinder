@@ -6,7 +6,8 @@ const mapStateToProps = state => ({
   user: state.profileAnalysis.user,
   languageUsageStats: state.profileAnalysis.languageUsageStats,
   similarFriends: state.profileAnalysis.similarFriends,
-  interestingPeople: state.profileAnalysis.interestingPeople
+  interestingPeople: state.profileAnalysis.interestingPeople,
+  recommendedRepos: state.profileAnalysis.recommendedRepos
 });
 
 const mapDispatchToProps = dispatch => ({

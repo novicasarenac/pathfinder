@@ -11,7 +11,11 @@ const Friend = ({ username, avatar, profileLink }) =>
       className="img-fluid rounded"
     />
     <i className="fa fa-github fa-2x ml-1 mr-1" />
-    <Button href={profileLink} target="tab" className="no-padding mr-1">
+    <Button
+      href={profileLink}
+      target="tab"
+      className="no-padding no-outline mr-1"
+    >
       <strong className="h5">
         {username}
       </strong>

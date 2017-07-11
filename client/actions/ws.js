@@ -26,8 +26,15 @@ export function onWsMessage(message) {
         break;
       }
 
+      case 'RECOMMENDED_REPOS': {
+        const { repos } = jsonMessage;
+
+        dispatch({ type: 'RECOMMENDED_REPOS', repos });
+        break;
+      }
+
       default:
-        console.log(message);
+        throw new Error('Unknown action type.');
     }
   };
 }
