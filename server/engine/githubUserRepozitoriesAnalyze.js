@@ -128,13 +128,16 @@ function computeByStars(id, number) {
   const languages = dataStorage.getGithubUserLanguagesStatistic(id);
   const sorted = Object.keys(languages).sort((a, b) => languages[b] - languages[a]);
 
-  for (let i = 0; i < number; i++) {
+  for (let i = 0; i < number / 2; i++) {
     github.search.repos({
       q: 'language:' + sorted[i],
       sort: 'stars',
       order: 'desc',
       page: 1,
       per_page: 10 }, (err, res) => {
+      if (err) {
+        console.log(err);
+      }
       const random = Math.floor(Math.random() * (res.data.items.length - 1));
       dataStorage.addGithubUserInterestingRepositories(id, [res.data.items[random], random < res.data.items.length - 2 ? res.data.items[random + 1] : res.data.items[random - 1]]);
       if (dataStorage.getGithubUserInterestingRepositories(id).length === 10) {
@@ -145,8 +148,16 @@ function computeByStars(id, number) {
 }
 
 function computeInterestingRepositories(id) {
-//  computeByStars(id, 6);
-  computeByFriends(id, 10);
+  if (Object.keys(dataStorage.getGithubUserLanguagesStatistic(id)).length === 0) {
+    if (dataStorage.getGithubUserEmptyFriendList(id)) {
+      notifications.sendInterestingRepositories(id);
+    } else {
+      //TODO
+    }
+  } else {
+    computeByStars(id, 6);
+    computeByFriends(id, 4);
+  }
 }
 
 export default { computeInterestingRepositories };
