@@ -31,6 +31,7 @@
     "env-cmd": "^5.1.0",
     "express": "^4.15.3",
     "font-awesome": "^4.7.0",
+    "gh-explore": "git+https://github.com/nemanja-m/gh-explore.git",
     "github": "^9.2.0",
     "history": "^4.6.3",
     "json-loader": "^0.5.4",

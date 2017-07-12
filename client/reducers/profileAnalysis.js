@@ -55,6 +55,12 @@ const reducer = (state = initialState, action) => {
         recommendedRepos: action.repos
       };
 
+    case 'INTERESTING_PEOPLE':
+      return {
+        ...state,
+        interestingPeople: action.people
+      };
+
     case 'RESET':
       return initialState;
 

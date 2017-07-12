@@ -1,7 +1,9 @@
 /* eslint import/prefer-default-export: "Off" */
 
+import { push } from 'react-router-redux';
+
 export function onWsMessage(message) {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     const jsonMessage = JSON.parse(message);
 
     switch (jsonMessage.type) {
@@ -26,10 +28,25 @@ export function onWsMessage(message) {
         break;
       }
 
+      case 'INTERESTING_PEOPLE': {
+        const { people } = jsonMessage;
+
+        dispatch({ type: 'INTERESTING_PEOPLE', people });
+        break;
+      }
+
       case 'RECOMMENDED_REPOS': {
         const { repos } = jsonMessage;
 
         dispatch({ type: 'RECOMMENDED_REPOS', repos });
+        break;
+      }
+
+      case 'EXPLORE_RECOMMENDATION': {
+        const { repos, people } = jsonMessage;
+
+        dispatch({ type: 'EXPLORE_RECOMMENDATION', repos, people });
+        dispatch(push('/explore-result'));
         break;
       }
 

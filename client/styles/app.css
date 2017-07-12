@@ -105,11 +105,20 @@ img[alt="avatar"] {
   color: white;
 }
 
+.explore-recommended-repos {
+  background: #c9510c;
+  color: white;
+}
+
 .interesting-people {
   background: #6cc644;
   color: white;
 }
 
+.explore-interesting-people {
+  background: #4078c0;
+  color: white;
+}
 .list-item {
   padding-top: 0px;
   padding-left: 4px;

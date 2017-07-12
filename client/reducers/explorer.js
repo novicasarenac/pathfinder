@@ -12,17 +12,11 @@ const reducer = (state = initialState, action) => {
         isWaiting: true
       };
 
-    case 'EXPLORE_RECOMMENDED_REPOS':
+    case 'EXPLORE_RECOMMENDATION':
       return {
         ...state,
         isWaiting: false,
-        recommendedRepos: action.repos
-      };
-
-    case 'EXPLORE_INTERESTING_PEOPLE':
-      return {
-        ...state,
-        isWaiting: false,
+        recommendedRepos: action.repos,
         interestingPeople: action.people
       };
 

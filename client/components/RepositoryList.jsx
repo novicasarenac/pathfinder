@@ -26,7 +26,7 @@ const Repo = ({ owner, name, link, stars, language }) =>
         <h5 className="lead mt-2 ml-1 medium-font">
           {language}
         </h5>
-        <span className="container-fluid" />
+        <span className="container-fluid no-padding" />
         <Octicon name="star" className="octicon-margin" />
         <h5 className="medium-font lead mt-1">
           {format(stars)}
@@ -57,7 +57,11 @@ class RepositoryList extends Component {
 
     return (
       <Col sm={12} className="container-fluid h-100 no-padding no-margin">
-        <Repositories repos={sortedRepos} />
+        {sortedRepos.length === 0
+          ? <h1 className="text-center lead vertical-center">
+            {this.props.errorMessage}
+          </h1>
+          : <Repositories repos={sortedRepos} />}
       </Col>
     );
   }

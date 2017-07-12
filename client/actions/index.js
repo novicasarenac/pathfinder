@@ -32,8 +32,8 @@ export default {
   },
 
   exploreGithub(areas) {
-    return dispatch =>
-      api.exploreGithub(areas).catch(() => {
+    return (dispatch, getState) =>
+      api.exploreGithub(Object.keys(areas), getState().ws.id).catch(() => {
         dispatch({ type: 'EXPLORE_ERROR_RESPONSE' });
 
         throw new SubmissionError({

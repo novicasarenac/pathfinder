@@ -1,28 +1,14 @@
 import React, { Component } from 'react';
-import { Col, Row, Button } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 import ProfileInfo from './ProfileInfo';
 import AnalysisResults from './AnalysisResults';
+import Navbar from './Navbar';
 
 class ProfileAnalysisResultPage extends Component {
   componentWillMount() {
     if (!this.props.user) {
-      this.props.redirectToMainPage();
+      this.props.handleMain();
     }
-  }
-
-  renderNavbar() {
-    return (
-      <Row className="btn-toolbar justify-content-between">
-        <Button bsStyle="link" onClick={this.props.redirectToProfileForm}>
-          <i className="fa fa-arrow-left" />
-          &nbsp; Back to profile form
-        </Button>
-        <Button bsStyle="link" onClick={this.props.redirectToMainPage}>
-          <i className="fa fa-home" />
-          &nbsp; Home
-        </Button>
-      </Row>
-    );
   }
 
   render() {
@@ -31,14 +17,16 @@ class ProfileAnalysisResultPage extends Component {
       languageUsageStats,
       similarFriends,
       interestingPeople,
-      recommendedRepos
+      recommendedRepos,
+      handleHome,
+      handleBack
     } = this.props;
 
     if (!user) return null;
 
     return (
       <Col lg={10} className="page container scrollable-container">
-        {this.renderNavbar()}
+        <Navbar handleBack={handleBack} handleHome={handleHome} />
         <hr />
 
         <Row className="block-75">
