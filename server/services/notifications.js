@@ -1,9 +1,22 @@
 import wss from '../server';
 import dataStorage from '../storage/dataStorage';
 
+function notifyClient(id, data) {
+  wss.clients.forEach((client) => {
+    // eslint-disable-next-line no-underscore-dangle
+    if (client._ultron.id === id) {
+      client.send(JSON.stringify(data));
+    }
+  });
+}
+
+function sendRecommendedRepositories(id, repos) {
+  notifyClient(id, { type: 'EXPLORE_RECOMMENDED_REPOS', repos });
+}
+
 function sendLanguagesStatistics(id, percentages) {
   wss.clients.forEach((client) => {
-    if (client['_ultron'].id === id) {
+    if (client._ultron.id === id) {
       client.send(JSON.stringify({ type: 'LANG_STATS', percentages }));
     }
   });
@@ -12,7 +25,9 @@ function sendLanguagesStatistics(id, percentages) {
 function sendSimilarityWithFriends(id) {
   const similarities = [];
   const similarFriends = dataStorage.getGithubUserSimilarityPercentage(id);
-  const sorted = Object.keys(similarFriends).sort((a, b) => similarFriends[b] - similarFriends[a]);
+  const sorted = Object.keys(similarFriends).sort(
+    (a, b) => similarFriends[b] - similarFriends[a]
+  );
   for (let i = 0; i < (sorted.length > 5 ? 5 : sorted.length); i++) {
     const friend = dataStorage.getGithubUserFriendByUsername(id, sorted[i]);
     similarities.push({
@@ -22,8 +37,10 @@ function sendSimilarityWithFriends(id) {
     });
   }
   wss.clients.forEach((client) => {
-    if (client['_ultron'].id === id) {
-      client.send(JSON.stringify({ type: 'SIMILAR_FRIENDS', friends: similarities }));
+    if (client._ultron.id === id) {
+      client.send(
+        JSON.stringify({ type: 'SIMILAR_FRIENDS', friends: similarities })
+      );
     }
   });
 }
@@ -44,8 +61,10 @@ function sendInterestingRepositories(id) {
   });
 
   wss.clients.forEach((client) => {
-    if (client['_ultron'].id === id) {
-      client.send(JSON.stringify({ type: 'RECOMMENDED_REPOS', repos: repositories }));
+    if (client._ultron.id === id) {
+      client.send(
+        JSON.stringify({ type: 'RECOMMENDED_REPOS', repos: repositories })
+      );
     }
   });
 }
@@ -61,10 +80,18 @@ function sendInterestingPeople(id, users) {
   });
 
   wss.clients.forEach((client) => {
-    if (client['_ultron'].id === id) {
-      client.send(JSON.stringify({ type: 'INTERESTING_PEOPLE', people: usersToSend }));
+    if (client._ultron.id === id) {
+      client.send(
+        JSON.stringify({ type: 'INTERESTING_PEOPLE', people: usersToSend })
+      );
     }
   });
 }
 
-export default { sendLanguagesStatistics, sendSimilarityWithFriends, sendInterestingRepositories, sendInterestingPeople };
+export default {
+  sendLanguagesStatistics,
+  sendSimilarityWithFriends,
+  sendInterestingRepositories,
+  sendInterestingPeople,
+  sendRecommendedRepositories
+};

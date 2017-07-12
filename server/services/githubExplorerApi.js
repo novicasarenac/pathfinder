@@ -1,6 +1,7 @@
 import githubExplorer from 'gh-explore';
 import GitHubApi from 'github';
 import recommendRepositories from '../engine/explorerRecommender';
+import notifications from './notifications';
 
 const github = GitHubApi();
 
@@ -87,7 +88,8 @@ function parseRequest(areas) {
 }
 
 function handleExploreRequest(request) {
-  const parsedRequest = parseRequest(request.body.areas);
+  const { id, areas } = request.body;
+  const parsedRequest = parseRequest(areas);
 
   const promises = parsedRequest.showcases.map(showcase =>
     getRepositoriesFromShowcase(showcase)
@@ -100,6 +102,8 @@ function handleExploreRequest(request) {
   Promise.all(promises)
     .then((reposPerArea) => {
       const recommendedRepos = recommendRepositories(reposPerArea);
+
+      notifications.sendRecommendedRepositories(id, recommendedRepos);
     })
     .catch(error => console.log(error));
 }

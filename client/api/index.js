@@ -7,9 +7,9 @@ export default {
     return axios.post(url, { username, id: socketId });
   },
 
-  exploreGithub(areas) {
+  exploreGithub(areas, id) {
     const url = `${process.env.API_URL}/explore`;
 
-    return axios.post(url, { areas });
+    return axios.post(url, { id, areas });
   }
 };

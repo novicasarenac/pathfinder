@@ -1,5 +1,7 @@
 /* eslint import/prefer-default-export: "Off" */
 
+import { push } from 'react-router-redux';
+
 export function onWsMessage(message) {
   return (dispatch) => {
     const jsonMessage = JSON.parse(message);
@@ -30,6 +32,14 @@ export function onWsMessage(message) {
         const { repos } = jsonMessage;
 
         dispatch({ type: 'RECOMMENDED_REPOS', repos });
+        break;
+      }
+
+      case 'EXPLORE_RECOMMENDED_REPOS': {
+        const { repos } = jsonMessage;
+
+        dispatch({ type: 'EXPLORE_RECOMMENDED_REPOS', repos });
+        dispatch(push('/explore-result'));
         break;
       }
 
