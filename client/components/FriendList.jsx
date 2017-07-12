@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Button, ListGroup, ListGroupItem, Col, Image } from 'react-bootstrap';
 
-const Friend = ({ username, avatar, profileLink }) =>
+const Friend = ({ username, avatar, profileLink, avatarSize }) =>
   (<ListGroupItem className="list-item justify-content-left">
     <Image
-      width="50"
-      height="50"
+      width={avatarSize}
+      height={avatarSize}
       src={avatar}
       alt="Avatar"
       className="img-fluid rounded"
@@ -25,13 +25,14 @@ const Friend = ({ username, avatar, profileLink }) =>
 class FriendList extends Component {
   renderFriends() {
     return (
-      <ListGroup className="h-100 mt-1">
+      <ListGroup className="h-100">
         {this.props.friends.map(friend =>
           (<Friend
             key={friend.username}
             username={friend.username}
             avatar={friend.avatar}
             profileLink={friend.profileLink}
+            avatarSize={this.props.avatarSize}
           />)
         )}
       </ListGroup>

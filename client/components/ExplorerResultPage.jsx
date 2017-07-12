@@ -2,8 +2,16 @@ import React, { Component } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import Navbar from './Navbar';
 import RepositoryList from './RepositoryList';
+import FriendList from './FriendList';
 
 class ExplorerResultPage extends Component {
+  componentWillMount() {
+    const { handleHome, recommendedRepos, interestingPeople } = this.props;
+    if (!recommendedRepos && !interestingPeople) {
+      handleHome();
+    }
+  }
+
   render() {
     const {
       recommendedRepos,
@@ -34,13 +42,9 @@ class ExplorerResultPage extends Component {
             <Row className="explore-interesting-people justify-content-center">
               <h4 className="mt-1 text-center">Interesting People</h4>
             </Row>
-            <ul>
-              {this.props.recommendedRepos.map(repo =>
-                (<li key={repo.name}>
-                  {repo.name} - {repo.stars}
-                </li>)
-              )}
-            </ul>
+            <Row className="justify-content-center block-40">
+              <FriendList friends={interestingPeople} avatarSize={30} />
+            </Row>
           </Col>
         </Row>
       </Col>

@@ -1,6 +1,6 @@
 import githubExplorer from 'gh-explore';
 import GitHubApi from 'github';
-import recommendRepositories from '../engine/explorerRecommender';
+import recommender from '../engine/explorerRecommender';
 import notifications from './notifications';
 
 const github = GitHubApi();
@@ -27,6 +27,31 @@ function searchGithub(query) {
         }
       }
     );
+  });
+}
+
+function getTopContributors(repo) {
+  return new Promise((resolve, reject) => {
+    // Contributors list is infinite.
+    if (repo.name === 'linux') {
+      resolve(null);
+    } else {
+      github.repos.getContributors(
+        {
+          owner: repo.owner,
+          repo: repo.name,
+          page: 1,
+          per_page: 10
+        },
+        (error, response) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(response.data);
+          }
+        }
+      );
+    }
   });
 }
 
@@ -101,12 +126,24 @@ function handleExploreRequest(request) {
 
   Promise.all(promises)
     .then((reposPerArea) => {
-      const recommendedRepos = recommendRepositories(reposPerArea);
-      const sortedRecommendedRepos = recommendedRepos.sort(
-        (first, second) => second.stars - first.stars
+      const recommendedRepos = recommender.recommendRepositories(reposPerArea);
+
+      const contributorPromises = recommendedRepos.map(repo =>
+        getTopContributors(repo)
       );
 
-      notifications.sendRecommendedRepositories(id, sortedRecommendedRepos);
+      Promise.all(contributorPromises).then((contributorsPerRepo) => {
+        const interestingPeople = recommender.recommendInterestingPeople(
+          // Remove null or undefined.
+          contributorsPerRepo.filter(c => c)
+        );
+
+        notifications.sendRecommendedRepositoriesAndPeople(
+          id,
+          recommendedRepos,
+          interestingPeople
+        );
+      });
     })
     .catch(error => console.log(error));
 }

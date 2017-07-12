@@ -10,8 +10,8 @@ function notifyClient(id, data) {
   });
 }
 
-function sendRecommendedRepositories(id, repos) {
-  notifyClient(id, { type: 'EXPLORE_RECOMMENDED_REPOS', repos });
+function sendRecommendedRepositoriesAndPeople(id, repos, people) {
+  notifyClient(id, { type: 'EXPLORE_RECOMMENDATION', repos, people });
 }
 
 function sendLanguagesStatistics(id, percentages) {
@@ -93,5 +93,5 @@ export default {
   sendSimilarityWithFriends,
   sendInterestingRepositories,
   sendInterestingPeople,
-  sendRecommendedRepositories
+  sendRecommendedRepositoriesAndPeople
 };

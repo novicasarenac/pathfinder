@@ -42,6 +42,7 @@ class AnalysisResults extends Component {
             ? <FriendList
               friends={this.props.similarFriends}
               errorMessage={errorMessage}
+              avatarSize={50}
             />
             : <Spinner color="#4078c0" />}
         </Row>

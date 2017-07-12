@@ -42,15 +42,11 @@ export function onWsMessage(message) {
         break;
       }
 
-      case 'EXPLORE_RECOMMENDED_REPOS': {
-        const { repos } = jsonMessage;
+      case 'EXPLORE_RECOMMENDATION': {
+        const { repos, people } = jsonMessage;
 
-        if (getState().explorer.isWaiting) {
-          dispatch(push('/explore-result'));
-        }
-
-        dispatch({ type: 'EXPLORE_RECOMMENDED_REPOS', repos });
-
+        dispatch({ type: 'EXPLORE_RECOMMENDATION', repos, people });
+        dispatch(push('/explore-result'));
         break;
       }
 

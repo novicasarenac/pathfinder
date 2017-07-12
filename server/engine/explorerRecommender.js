@@ -1,6 +1,33 @@
-const RESPONSE_REPOS_COUNT = 20;
+const ITEMS_PER_RESPONSE = 20;
 
-export default function recommendRepositories(repositoriesPerArea) {
+function recommend(sortedGroups) {
+  const response = [];
+  const emptyGroups = new Set();
+  let index = 0;
+
+  while (
+    response.length < ITEMS_PER_RESPONSE &&
+    emptyGroups.size < sortedGroups.length
+  ) {
+    const currentGroupIndex = index % sortedGroups.length;
+
+    if (!emptyGroups.has(currentGroupIndex)) {
+      const currentGroup = sortedGroups[currentGroupIndex];
+
+      if (currentGroup.length === 0) {
+        emptyGroups.add(currentGroupIndex);
+      } else {
+        response.push(currentGroup.pop());
+      }
+    }
+
+    index += 1;
+  }
+
+  return response;
+}
+
+function recommendRepositories(repositoriesPerArea) {
   // Sorted by ascending order.
   const sortedReposPerArea = repositoriesPerArea.map(repos =>
     repos.sort((first, second) => {
@@ -13,28 +40,7 @@ export default function recommendRepositories(repositoriesPerArea) {
     })
   );
 
-  const responseRepos = [];
-  const emptyAreas = new Set();
-  let index = 0;
-
-  while (
-    responseRepos.length < RESPONSE_REPOS_COUNT &&
-    emptyAreas.size < sortedReposPerArea.length
-  ) {
-    const currentAreaIndex = index % sortedReposPerArea.length;
-
-    if (!emptyAreas.has(currentAreaIndex)) {
-      const currentRepositories = sortedReposPerArea[currentAreaIndex];
-
-      if (currentRepositories.length === 0) {
-        emptyAreas.add(currentAreaIndex);
-      } else {
-        responseRepos.push(currentRepositories.pop());
-      }
-    }
-
-    index += 1;
-  }
+  const responseRepos = recommend(sortedReposPerArea);
 
   return responseRepos.map((repo) => {
     const name = repo.name;
@@ -51,3 +57,24 @@ export default function recommendRepositories(repositoriesPerArea) {
     };
   });
 }
+
+function recommendInterestingPeople(contributorPerRepo) {
+  const sortedContributors = contributorPerRepo.map(contributors =>
+    contributors.sort(
+      (first, second) => first.contributions - second.contributions
+    )
+  );
+
+  const responseContributors = recommend(sortedContributors);
+
+  return responseContributors.map(contributor => ({
+    username: contributor.login,
+    avatar: contributor.avatar_url,
+    profileLink: contributor.html_url
+  }));
+}
+
+export default {
+  recommendInterestingPeople,
+  recommendRepositories
+};
