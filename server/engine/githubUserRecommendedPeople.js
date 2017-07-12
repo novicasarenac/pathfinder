@@ -49,7 +49,7 @@ function computeRecommendedPeople(id) {
 
       responseContributors.push(contributorToPush);
     }
-    console.log(responseContributors);
+    notifications.sendInterestingPeople(id, responseContributors);
   }).catch((error) => {
     console.log(error);
   });

@@ -50,4 +50,21 @@ function sendInterestingRepositories(id) {
   });
 }
 
-export default { sendLanguagesStatistics, sendSimilarityWithFriends, sendInterestingRepositories };
+function sendInterestingPeople(id, users) {
+  const usersToSend = [];
+  users.forEach((user) => {
+    usersToSend.push({
+      profileLink: user.html_url,
+      username: user.login,
+      avatar: user.avatar_url
+    });
+  });
+
+  wss.clients.forEach((client) => {
+    if (client['_ultron'].id === id) {
+      client.send(JSON.stringify({ type: 'INTERESTING_PEOPLE', people: usersToSend }));
+    }
+  });
+}
+
+export default { sendLanguagesStatistics, sendSimilarityWithFriends, sendInterestingRepositories, sendInterestingPeople };
