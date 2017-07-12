@@ -60,6 +60,8 @@ function computeNormForUsers(id, languagesToCompute, friends) {
           } else {
             resolve();
           }
+        }).catch((e) => {
+          console.log(e);
         });
       });
     }));
@@ -90,17 +92,35 @@ function computeByFriends(id, number) {
 
   Promise.all(computeNormForUsers(id, languagesToCompute, followers)).then(() => {
     if (finishedComputing) {
-      console.log(interestingFriendsRepositories);
+      const interestingArray = [];
+      interestingFriendsRepositories.forEach((repo) => {
+        interestingArray.push(repo.repo);
+      });
+      dataStorage.addGithubUserInterestingRepositories(id, interestingArray);
+      if (dataStorage.getGithubUserInterestingRepositories(id).length === 10) {
+        notifications.sendInterestingRepositories(id);
+      }
     } else {
       finishedComputing = true;
     }
+  }).catch((err) => {
+    console.log(err);
   });
   Promise.all(computeNormForUsers(id, languagesToCompute, following)).then(() => {
     if (finishedComputing) {
-      console.log(interestingFriendsRepositories);
+      const interestingArray = [];
+      interestingFriendsRepositories.forEach((repo) => {
+        interestingArray.push(repo.repo);
+      });
+      dataStorage.addGithubUserInterestingRepositories(id, interestingArray);
+      if (dataStorage.getGithubUserInterestingRepositories(id).length === 10) {
+        notifications.sendInterestingRepositories(id);
+      }
     } else {
       finishedComputing = true;
     }
+  }).catch((err) => {
+    console.log(err);
   });
 }
 
@@ -124,27 +144,9 @@ function computeByStars(id, number) {
   }
 }
 
-function computeRandom(id, number) {
-  for (let i = 0; i < number; i++) {
-    github.search.repos({
-      q: 'size:>1',
-      sort: 'stars',
-      order: 'desc',
-      page: i + 1,
-      per_page: 10 }, (err, res) => {
-      const random = Math.floor(Math.random() * (res.data.items.length - 1));
-      dataStorage.addGithubUserInterestingRepositories(id, [res.data.items[random]]);
-      if (dataStorage.getGithubUserInterestingRepositories(id).length === 10) {
-        notifications.sendInterestingRepositories(id);
-      }
-    });
-  }
-}
-
 function computeInterestingRepositories(id) {
-  computeByStars(id, 3);
-  computeRandom(id, 2);
-  computeByFriends(id, 2);
+//  computeByStars(id, 6);
+  computeByFriends(id, 10);
 }
 
 export default { computeInterestingRepositories };
