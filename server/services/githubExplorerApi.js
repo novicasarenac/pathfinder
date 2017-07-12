@@ -102,8 +102,11 @@ function handleExploreRequest(request) {
   Promise.all(promises)
     .then((reposPerArea) => {
       const recommendedRepos = recommendRepositories(reposPerArea);
+      const sortedRecommendedRepos = recommendedRepos.sort(
+        (first, second) => second.stars - first.stars
+      );
 
-      notifications.sendRecommendedRepositories(id, recommendedRepos);
+      notifications.sendRecommendedRepositories(id, sortedRecommendedRepos);
     })
     .catch(error => console.log(error));
 }

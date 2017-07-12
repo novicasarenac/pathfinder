@@ -73,7 +73,7 @@ class AnalysisResults extends Component {
         <Row className="interesting-people justify-content-center">
           <h4 className="mt-1 text-center">Interesting People</h4>
         </Row>
-        <Row className="justify-content-center">
+        <Row className="justify-content-center block-40">
           {this.props.interestingPeople
             ? <FriendList
               friends={this.props.interestingPeople}

@@ -28,6 +28,13 @@ export function onWsMessage(message) {
         break;
       }
 
+      case 'INTERESTING_PEOPLE': {
+        const { people } = jsonMessage;
+
+        dispatch({ type: 'INTERESTING_PEOPLE', people });
+        break;
+      }
+
       case 'RECOMMENDED_REPOS': {
         const { repos } = jsonMessage;
 
