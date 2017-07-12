@@ -149,14 +149,26 @@ function computeByStars(id, number) {
 
 function computeInterestingRepositories(id) {
   if (Object.keys(dataStorage.getGithubUserLanguagesStatistic(id)).length === 0) {
-    if (dataStorage.getGithubUserEmptyFriendList(id)) {
+    if (dataStorage.getGithubUserFollowing(id).length === 0 && dataStorage.getGithubUserFollowers(id) === 0) {
       notifications.sendInterestingRepositories(id);
     } else {
-      //TODO
+      computeByFriends(id, 10);
     }
   } else {
-    computeByStars(id, 6);
-    computeByFriends(id, 4);
+    if (dataStorage.getGithubUserFollowing(id).length === 0 && dataStorage.getGithubUserFollowers(id) === 0) {
+      if (Object.keys(dataStorage.getGithubUserLanguagesStatistic(id)).length < 5) {
+        notifications.sendInterestingRepositories(id);
+      } else {
+        computeByStars(id, 10);
+      }
+    } else {
+      if (Object.keys(dataStorage.getGithubUserLanguagesStatistic(id)).length < 3) {
+        computeByFriends(id, 10);
+      } else {
+        computeByStars(id, 6);
+        computeByFriends(id, 4);
+      }
+    }
   }
 }
 

@@ -31,14 +31,16 @@ function sendSimilarityWithFriends(id) {
 function sendInterestingRepositories(id) {
   const repositories = [];
   dataStorage.getGithubUserInterestingRepositories(id).forEach((repository) => {
-    repositories.push({
-      owner: repository.owner.login,
-      stars: repository.stargazers_count,
-      forks: repository.forks_count,
-      language: repository.language ? repository.language : 'No language',
-      name: repository.name,
-      link: repository.html_url
-    });
+    if (Object.keys(repository).length > 0) {
+      repositories.push({
+        owner: repository.owner.login,
+        stars: repository.stargazers_count,
+        forks: repository.forks_count,
+        language: repository.language ? repository.language : 'No language',
+        name: repository.name,
+        link: repository.html_url
+      });
+    }
   });
 
   wss.clients.forEach((client) => {
