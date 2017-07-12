@@ -3,6 +3,7 @@ import GitHubApi from 'github';
 import dataStorage from '../storage/dataStorage';
 import notifications from '../services/notifications';
 import euclideanNorm from '../engine/euclideanNorm';
+import githubUserRecommendedPeople from './githubUserRecommendedPeople';
 
 const github = GitHubApi();
 github.authenticate({
@@ -99,6 +100,7 @@ function computeByFriends(id, number) {
       dataStorage.addGithubUserInterestingRepositories(id, interestingArray);
       if (dataStorage.getGithubUserInterestingRepositories(id).length === 10) {
         notifications.sendInterestingRepositories(id);
+        githubUserRecommendedPeople.computeRecommendedPeople(id);
       }
     } else {
       finishedComputing = true;
@@ -115,6 +117,7 @@ function computeByFriends(id, number) {
       dataStorage.addGithubUserInterestingRepositories(id, interestingArray);
       if (dataStorage.getGithubUserInterestingRepositories(id).length === 10) {
         notifications.sendInterestingRepositories(id);
+        githubUserRecommendedPeople.computeRecommendedPeople(id);
       }
     } else {
       finishedComputing = true;
@@ -142,6 +145,7 @@ function computeByStars(id, number) {
       dataStorage.addGithubUserInterestingRepositories(id, [res.data.items[random], random < res.data.items.length - 2 ? res.data.items[random + 1] : res.data.items[random - 1]]);
       if (dataStorage.getGithubUserInterestingRepositories(id).length === 10) {
         notifications.sendInterestingRepositories(id);
+        githubUserRecommendedPeople.computeRecommendedPeople(id);
       }
     });
   }
@@ -151,6 +155,7 @@ function computeInterestingRepositories(id) {
   if (Object.keys(dataStorage.getGithubUserLanguagesStatistic(id)).length === 0) {
     if (dataStorage.getGithubUserFollowing(id).length === 0 && dataStorage.getGithubUserFollowers(id) === 0) {
       notifications.sendInterestingRepositories(id);
+      githubUserRecommendedPeople.computeRecommendedPeople(id);
     } else {
       computeByFriends(id, 10);
     }
@@ -158,6 +163,7 @@ function computeInterestingRepositories(id) {
     if (dataStorage.getGithubUserFollowing(id).length === 0 && dataStorage.getGithubUserFollowers(id) === 0) {
       if (Object.keys(dataStorage.getGithubUserLanguagesStatistic(id)).length < 5) {
         notifications.sendInterestingRepositories(id);
+        githubUserRecommendedPeople.computeRecommendedPeople(id);
       } else {
         computeByStars(id, 10);
       }
