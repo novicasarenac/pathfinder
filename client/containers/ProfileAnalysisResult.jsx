@@ -11,9 +11,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  redirectToProfileForm: () => dispatch(actions.redirect('/analysis-request')),
-
-  redirectToMainPage: () => dispatch(actions.redirect('/'))
+  handleBack: () => dispatch(actions.redirect('/analysis-request')),
+  handleHome: () => dispatch(actions.redirect('/'))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(

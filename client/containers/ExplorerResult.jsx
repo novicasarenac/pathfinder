@@ -8,7 +8,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   handleBack: () => dispatch(actions.redirect('/explore')),
-  handleMain: () => dispatch(actions.redirect('/'))
+  handleHome: () => dispatch(actions.redirect('/'))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExplorerResultPage);
