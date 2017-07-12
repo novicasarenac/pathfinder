@@ -3,7 +3,7 @@
 import { push } from 'react-router-redux';
 
 export function onWsMessage(message) {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     const jsonMessage = JSON.parse(message);
 
     switch (jsonMessage.type) {
@@ -38,8 +38,12 @@ export function onWsMessage(message) {
       case 'EXPLORE_RECOMMENDED_REPOS': {
         const { repos } = jsonMessage;
 
+        if (getState().explorer.isWaiting) {
+          dispatch(push('/explore-result'));
+        }
+
         dispatch({ type: 'EXPLORE_RECOMMENDED_REPOS', repos });
-        dispatch(push('/explore-result'));
+
         break;
       }
 

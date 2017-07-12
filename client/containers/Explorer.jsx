@@ -2,9 +2,16 @@ import { connect } from 'react-redux';
 import ExplorerPage from '../components/ExplorerPage';
 import actions from '../actions';
 
-const mapDispatchToProps = dispatch => ({
-  handleBack: () => dispatch(actions.redirect('/')),
-  onSubmit: areas => dispatch(actions.exploreGithub(areas))
+const mapStateToProps = state => ({
+  isWaiting: state.explorer.isWaiting
 });
 
-export default connect(null, mapDispatchToProps)(ExplorerPage);
+const mapDispatchToProps = dispatch => ({
+  handleBack: () => dispatch(actions.redirect('/')),
+  onSubmit: (areas) => {
+    dispatch({ type: 'EXPLORE_REQUEST_SENT' });
+    return dispatch(actions.exploreGithub(areas));
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ExplorerPage);
