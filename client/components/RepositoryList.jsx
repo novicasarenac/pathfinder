@@ -57,7 +57,11 @@ class RepositoryList extends Component {
 
     return (
       <Col sm={12} className="container-fluid h-100 no-padding no-margin">
-        <Repositories repos={sortedRepos} />
+        {sortedRepos.length === 0
+          ? <h1 className="text-center lead vertical-center">
+            {this.props.errorMessage}
+          </h1>
+          : <Repositories repos={sortedRepos} />}
       </Col>
     );
   }

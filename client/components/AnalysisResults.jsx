@@ -51,6 +51,9 @@ class AnalysisResults extends Component {
   }
 
   renderRecommendedRepos() {
+    const errorMessage =
+      'You do not have enough activities on Github. Write some code.';
+
     return (
       <Col className="square container">
         <Row className="recommended-repos justify-content-center">
@@ -58,7 +61,10 @@ class AnalysisResults extends Component {
         </Row>
         <Row className="justify-content-center block-40">
           {this.props.recommendedRepos
-            ? <RepositoryList repositories={this.props.recommendedRepos} />
+            ? <RepositoryList
+              repositories={this.props.recommendedRepos}
+              errorMessage={errorMessage}
+            />
             : <Spinner color="#bd2c00" />}
         </Row>
       </Col>
@@ -79,6 +85,7 @@ class AnalysisResults extends Component {
             ? <FriendList
               friends={this.props.interestingPeople}
               errorMessage={errorMessage}
+              avatarSize={50}
             />
             : <Spinner color="#6cc644" />}
         </Row>
