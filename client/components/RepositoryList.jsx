@@ -26,7 +26,7 @@ const Repo = ({ owner, name, link, stars, language }) =>
         <h5 className="lead mt-2 ml-1 medium-font">
           {language}
         </h5>
-        <span className="container-fluid" />
+        <span className="container-fluid no-padding" />
         <Octicon name="star" className="octicon-margin" />
         <h5 className="medium-font lead mt-1">
           {format(stars)}

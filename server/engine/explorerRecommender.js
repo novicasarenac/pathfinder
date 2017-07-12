@@ -36,10 +36,18 @@ export default function recommendRepositories(repositoriesPerArea) {
     index += 1;
   }
 
-  return responseRepos.map(repo => ({
-    name: repo.name,
-    owner: repo.author || repo.owner.login,
-    stars: repo.stars || repo.stargazers_count,
-    language: repo.language
-  }));
+  return responseRepos.map((repo) => {
+    const name = repo.name;
+    const owner = repo.author || repo.owner.login;
+    const stars = repo.stars || repo.stargazers_count;
+    const language = repo.language;
+
+    return {
+      name,
+      owner,
+      stars,
+      language,
+      link: `https://github.com/${owner}/${name}`
+    };
+  });
 }

@@ -23,7 +23,7 @@ class ExplorerResultPage extends Component {
 
         <Row className="ml-1 container-fluid justify-content-center block-75">
           <Col lg={6} className="mb-3" style={{ paddingRight: '20px' }}>
-            <Row className="recommended-repos justify-content-center ">
+            <Row className="explore-recommended-repos justify-content-center ">
               <h4 className="mt-1 text-center">Recommended Projects</h4>
             </Row>
             <Row className="justify-content-center block-40">
@@ -31,7 +31,7 @@ class ExplorerResultPage extends Component {
             </Row>
           </Col>
           <Col lg={6} className="mb-3" style={{ paddingLeft: '20px' }}>
-            <Row className="interesting-people justify-content-center">
+            <Row className="explore-interesting-people justify-content-center">
               <h4 className="mt-1 text-center">Interesting People</h4>
             </Row>
             <ul>
